@@ -1,14 +1,25 @@
-<ion-header>
+<!-- <ion-header>
   <ion-navbar>
     <ion-title>
       Ionic Blank
     </ion-title>
   </ion-navbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content padding class="home-page-background">
+    <ion-card>
+        <img src="../assets/imgs/home/logo.png" />
+        <div class="card-title">Trade Direct</div>
+    </ion-card>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col col-12>
+                <button ion-button full color="light" (click)="openLoginModal()">Login</button>
+                <button ion-button full color="light">FAQs</button>
+                <button ion-button full color="light">Contact Us</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
 </ion-content>
