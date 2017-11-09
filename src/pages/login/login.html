@@ -1,0 +1,46 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Client login</ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="closeLoginPage()">
+                <ion-icon name="close-circle"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <form [formGroup]="formGroup">
+        <ion-list>
+            <!-- Username validation rules -->
+            <ion-item *ngIf="username.hasError('required') && username.touched">
+                <p ion-text color="danger">*UserName is required</p>
+            </ion-item>
+            <!-- End of username validation rules -->
+            <ion-item>
+                <ion-label floating>Username</ion-label>
+                <ion-input type="text" formControlName="username"></ion-input>
+            </ion-item>
+
+            <!-- password validation rules -->
+            <ion-item *ngIf="password.hasError('required') && password.touched">
+                <p ion-text color="danger">*Password is required</p>
+            </ion-item>
+            <!-- End of password validation rules -->
+            <ion-item>
+                <ion-label floating>Password</ion-label>
+                <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+        </ion-list>
+        <button ion-button type="submit" [disabled]="!formGroup.valid" (click)="loginUser()">Submit</button>
+    </form>
+</ion-content>

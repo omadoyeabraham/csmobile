@@ -8,6 +8,11 @@ import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginProvider } from '../providers/login/login';
+import { ConstantProvider } from '../providers/constant/constant';
+import { CustomerProvider } from '../providers/customer/customer';
+import { CashAccountProvider } from '../providers/cash-account/cash-account';
+import { FixedIncomeProvider } from '../providers/fixed-income/fixed-income';
+import { StockbrokingProvider } from '../providers/stockbroking/stockbroking';
 
 @NgModule({
   declarations: [
@@ -28,7 +33,12 @@ import { LoginProvider } from '../providers/login/login';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    LoginProvider
+    LoginProvider,
+    ConstantProvider,
+    CustomerProvider,
+    CashAccountProvider,
+    FixedIncomeProvider,
+    StockbrokingProvider
   ]
 })
 export class AppModule {}
