@@ -46,6 +46,9 @@ export class LoginPage {
     this.viewController.dismiss();
   }
 
+  /**
+   * 
+   */
   loginUser(){
     let username = this.username.value;
     let password = this.password.value;

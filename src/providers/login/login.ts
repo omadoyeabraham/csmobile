@@ -3,6 +3,7 @@ import { CustomerProvider } from './../customer/customer';
 import { ConstantProvider } from './../constant/constant';
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { LoadingController } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 
 /*
@@ -21,12 +22,24 @@ export class LoginProvider {
     public http: Http, 
     private constant: ConstantProvider, 
     private customer: CustomerProvider,
-    private fixedIncome: FixedIncomeProvider
-) {
+    private fixedIncome: FixedIncomeProvider,
+    private loadingController: LoadingController
+    ) {
     console.log('Hello LoginProvider Provider');
   }
 
+  /**
+   * Handles customer login
+   * 
+   * @param username string
+   * @param password string
+   */
   customerLogin(username: string, password: string){
+    let loader = this.loadingController.create({
+      content: this.constant.loginLoadingMessage
+    });
+    loader.present(); 
+
     this.username = username;
     this.password = password;
     this.baseURL = this.constant.baseURL + 'findCustomerByName';
@@ -41,15 +54,26 @@ export class LoginProvider {
     this.http.post(this.baseURL, body, {headers: headers})
     .map(res => res.json())
     .subscribe(data => {
-      //console.log(data);
+      console.log(data);
       this.customer.setCustomerData(data['customer']);
       this.fixedIncome.setFIData(data['FI']);
-      console.log(this.customer.getCustomerData());
-    });
+      //console.log(this.customer.getCustomerData());
+      loader.dismiss();
+    },
+  
+  err =>{
+    if(err.status === 401){
+      this.constant.getToastMessage(this.constant.toastMessagePasswordMismatch);
+    }
 
-    console.log(this.username);
-    console.log(this.password);
-    console.log(this.constant.baseURL + 'findCustomerByName');
+    if(err.status == null){
+      this.constant.getToastMessage(this.constant.toastMessageNetworkError);
+    }
+    loader.dismiss();    
+  });
+
   }
+
+  
 
 }

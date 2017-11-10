@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { LoadingController, ToastController } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 
 /*
@@ -20,9 +21,34 @@ import 'rxjs/add/operator/map';
 export class ConstantProvider {
 
 public baseURL = "http://localhost/restserver/public/api/";
+public loginLoadingMessage = "Loading Please Wait...";
+public toastMessagePasswordMismatch = "Username and Password do not match!";
+public toastMessageNetworkError = "Network error, please connect to a network!";
+public toastMessageGeneral = "Something went wrong, please try again later!";
+public toastDuration = 5000;
+public toastPosition = "top";
+public loader: LoadingController;
 
-  constructor(public http: Http) {
+  constructor(
+    public http: Http,
+    private toastController: ToastController
+  ) {
     console.log('Hello ConstantProvider Provider');
   }
+
+  /**
+   * Gets the toast error message
+   * 
+   * @param status Response error status
+   */
+  getToastMessage(message: string){
+    let toaster = this.toastController.create({
+      message: message,
+      duration: this.toastDuration,
+      position: this.toastPosition
+    });
+    toaster.present();
+  }
+  
 
 }
