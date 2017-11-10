@@ -3,7 +3,7 @@ import { CustomerProvider } from './../customer/customer';
 import { ConstantProvider } from './../constant/constant';
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, ModalController } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 
 /*
@@ -23,7 +23,8 @@ export class LoginProvider {
     private constant: ConstantProvider, 
     private customer: CustomerProvider,
     private fixedIncome: FixedIncomeProvider,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private welcomeModal: ModalController
     ) {
     console.log('Hello LoginProvider Provider');
   }
@@ -54,9 +55,11 @@ export class LoginProvider {
     this.http.post(this.baseURL, body, {headers: headers})
     .map(res => res.json())
     .subscribe(data => {
-      console.log(data);
-      this.customer.setCustomerData(data['customer']);
-      this.fixedIncome.setFIData(data['FI']);
+      let welcomePage = this.welcomeModal.create('WelcomePage', {customerData: data});
+      welcomePage.present();
+      // console.log(data);
+      // this.customer.setCustomerData(data['customer']);
+      // this.fixedIncome.setFIData(data['FI']);
       //console.log(this.customer.getCustomerData());
       loader.dismiss();
     },

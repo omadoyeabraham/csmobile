@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the WelcomePage page.
@@ -15,11 +15,33 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class WelcomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private customer: any;
+  private customerData: any;
+  public firstName: string;
+  public lastName: string;
+  public middleName: string;
+  public customerLabel: string;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private viewController: ViewController) {
+    this.customerData = navParams.get('customerData');
+    this.customer = this.customerData['customer'];
+
+    this.firstName = this.customer['firstName'];
+    this.lastName = this.customer['lastName'];
+    this.middleName = this.customer['middleName'];
+    this.customerLabel = this.customer['label'];
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WelcomePage');
+  }
+
+  continueToDashboard(){
+    console.log('Continue to dashboard!');
+  }
+
+  backToLoginPage(){
+    this.viewController.dismiss();
   }
 
 }

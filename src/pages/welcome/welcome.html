@@ -6,13 +6,24 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>welcome</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>welcome</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="welcomepage">
+    <ion-card>
+        <ion-card-content>
+            <ion-card-title>
+                Welcome
+            </ion-card-title>
+            <p>{{customerLabel}}</p>
+        </ion-card-content>
+        <img src="../assets/imgs/welcome/logo.png" />
+        <button ion-button full color="primary" (click)="continueToDashboard()">Continue</button>
+        <button ion-button full color="primary" (click)="backToLoginPage()">Cancel</button>
+    </ion-card>
 
 </ion-content>
