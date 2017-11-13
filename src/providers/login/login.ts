@@ -1,5 +1,3 @@
-import { FixedIncomeProvider } from './../fixed-income/fixed-income';
-import { CustomerProvider } from './../customer/customer';
 import { ConstantProvider } from './../constant/constant';
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
@@ -21,8 +19,6 @@ export class LoginProvider {
   constructor(
     public http: Http, 
     private constant: ConstantProvider, 
-    private customer: CustomerProvider,
-    private fixedIncome: FixedIncomeProvider,
     private loadingController: LoadingController,
     private welcomeModal: ModalController
     ) {
@@ -55,13 +51,20 @@ export class LoginProvider {
     this.http.post(this.baseURL, body, {headers: headers})
     .map(res => res.json())
     .subscribe(data => {
-      let welcomePage = this.welcomeModal.create('WelcomePage', {customerData: data});
-      welcomePage.present();
+      if(typeof data !== 'undefined'){
+        let welcomePage = this.welcomeModal.create('WelcomePage', {customerData: data});
+        welcomePage.present();
+        loader.dismiss();
+      }
+      
+
+
+      
       // console.log(data);
       // this.customer.setCustomerData(data['customer']);
       // this.fixedIncome.setFIData(data['FI']);
       //console.log(this.customer.getCustomerData());
-      loader.dismiss();
+      
     },
   
   err =>{
