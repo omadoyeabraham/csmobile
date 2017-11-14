@@ -8,12 +8,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
+ export interface PageInterface{
+   title: string;
+   pageName: string;
+   icon: string;
+ }
+
+
 @IonicPage()
 @Component({
   selector: 'page-sidemenu',
   templateUrl: 'sidemenu.html',
 })
 export class SidemenuPage {
+
+  rootPage = "DashboardPage";
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

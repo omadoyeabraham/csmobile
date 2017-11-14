@@ -1,18 +1,16 @@
-<!--
-  Generated template for the SidemenuPage page.
+<ion-menu [content]="mycontent">
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
+    <ion-header>
+        <ion-navbar>
+            <ion-title>Side Menu</ion-title>
+        </ion-navbar>
+    </ion-header>
 
-  <ion-navbar>
-    <ion-title>sidemenu</ion-title>
-  </ion-navbar>
+    <ion-content>
+        <ion-list>
+            <p>some menu content, could be list items</p>
+        </ion-list>
+    </ion-content>
+</ion-menu>
 
-</ion-header>
-
-
-<ion-content padding>
-
-</ion-content>
+<ion-nav #mycontent [root]="rootPage" swipeBackEnabled="false"></ion-nav>
