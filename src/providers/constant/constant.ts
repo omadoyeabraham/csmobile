@@ -20,7 +20,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ConstantProvider {
 
-public baseURL = "http://localhost/restserver/public/api/";
+public baseURL = "https://restserver.cardinalstone.com/public/index.php/api/";
 public findCustomerByName = this.baseURL + 'findCustomerByName';
 public loginLoadingMessage = "Loading Please Wait...";
 public toastMessagePasswordMismatch = "Username and Password do not match!";
