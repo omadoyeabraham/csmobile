@@ -1,13 +1,16 @@
-<ion-menu [content]="mycontent">
+<ion-menu [content]="mycontent" persistent="true">
     <ion-header>
-        <ion-navbar>
+        <ion-toolbar>
             <ion-title>Side Menu</ion-title>
-        </ion-navbar>
+        </ion-toolbar>
     </ion-header>
 
     <ion-content>
         <ion-list>
-            <p>some menu content, could be list items</p>
+            <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">
+              <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>
+              {{ p.title }}
+            </button>
         </ion-list>
     </ion-content>
 </ion-menu>

@@ -1,3 +1,4 @@
+import { PageInterface } from './sidemenu';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Nav } from 'ionic-angular';
 
@@ -23,7 +24,7 @@ import { IonicPage, NavController, NavParams, Nav } from 'ionic-angular';
 export class SidemenuPage {
 
   rootPage = "DashboardPage";
-  @ViewChild(Nav) nav: Nav;
+  @ViewChild('mycontent') nav: Nav;
 
   pages: PageInterface[] = [
     {title: 'Dashboard', pageName: 'DashboardPage', icon: 'home'}
@@ -34,6 +35,14 @@ export class SidemenuPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SidemenuPage');
+  }
+
+  openPage(page: PageInterface){
+    console.log("I was clicked!");
+  }
+
+  isActive(page: PageInterface){
+    
   }
 
 }
