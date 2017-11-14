@@ -30,7 +30,7 @@ export class LoginPage {
     private welcomeModal: ModalController,
     private loadingController: LoadingController
   ) {
-    this.formGroup = formBuilder.group(
+    this.formGroup = this.formBuilder.group(
       {
       username: ['', Validators.required],
       password: ['', Validators.required]
