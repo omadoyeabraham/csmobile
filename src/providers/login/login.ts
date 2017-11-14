@@ -1,8 +1,11 @@
+import { Observable } from 'rxjs/Observable';
 import { ConstantProvider } from './../constant/constant';
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { LoadingController, ModalController } from 'ionic-angular';
+import { Http, Response, Headers } from '@angular/http';
+import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/catch';
 
 /*
   Generated class for the LoginProvider provider.
@@ -17,10 +20,8 @@ export class LoginProvider {
   private baseURL: string = "";
 
   constructor(
-    public http: Http, 
-    private constant: ConstantProvider, 
-    private loadingController: LoadingController,
-    private welcomeModal: ModalController
+    private http: Http, 
+    private constant: ConstantProvider
     ) {
     console.log('Hello LoginProvider Provider');
   }
@@ -32,14 +33,10 @@ export class LoginProvider {
    * @param password string
    */
   customerLogin(username: string, password: string){
-    let loader = this.loadingController.create({
-      content: this.constant.loginLoadingMessage
-    });
-    loader.present(); 
-
     this.username = username;
     this.password = password;
-    this.baseURL = this.constant.baseURL + 'findCustomerByName';
+    // this.baseURL = this.constant.baseURL + 'findCustomerByName';
+    this.baseURL = this.constant.findCustomerByName;
     let body = {
       username: this.username,
       password: this.password
@@ -48,38 +45,34 @@ export class LoginProvider {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    this.http.post(this.baseURL, body, {headers: headers})
-    .map(res => res.json())
-    .subscribe(data => {
-      if(typeof data !== 'undefined'){
-        let welcomePage = this.welcomeModal.create('WelcomePage', {customerData: data});
-        welcomePage.present();
-        loader.dismiss();
-      }
-      
-
-
-      
-      // console.log(data);
-      // this.customer.setCustomerData(data['customer']);
-      // this.fixedIncome.setFIData(data['FI']);
-      //console.log(this.customer.getCustomerData());
-      
-    },
-  
-  err =>{
-    if(err.status === 401){
-      this.constant.getToastMessage(this.constant.toastMessagePasswordMismatch);
-    }
-
-    if(err.status == null){
-      this.constant.getToastMessage(this.constant.toastMessageNetworkError);
-    }
-    loader.dismiss();    
-  });
-
+    return this.http.post(this.baseURL, body, {headers: headers})
+    .do(this.getLoginResponse)//You can delete the do function as it is not required
+    .map(this.getExtractedData)
+    .catch(this.getLoginError);
   }
 
-  
+  /**
+   * 
+   * @param res The response object
+   */
+  private getLoginResponse(res: Response){
+    console.log(res);
+  }
+
+  /**
+   * 
+   * @param res The response object
+   */
+  private getExtractedData(res: Response){
+    return res.json();
+  }
+
+  /**
+   * 
+   * @param error The response object
+   */
+  private getLoginError(error: Response | any){
+    return Observable.throw(error.status || "Server error.");    
+  }
 
 }

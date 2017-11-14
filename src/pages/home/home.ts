@@ -1,4 +1,3 @@
-import { LoginProvider } from './../../providers/login/login';
 import { Component } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 
@@ -10,7 +9,7 @@ export class HomePage {
   public username = "";
   public password = "";
 
-  constructor(private loginModal: ModalController, private loginProvider: LoginProvider) {
+  constructor(private loginModal: ModalController) {
 
   }
 
