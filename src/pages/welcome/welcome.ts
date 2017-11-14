@@ -33,11 +33,12 @@ export class WelcomePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad WelcomePage');
+    console.log('ionViewDidLoad WelcomePage');    
   }
 
   continueToDashboard(){
     console.log('Continue to dashboard!');
+    this.navCtrl.push('DashboardPage');
   }
 
   backToLoginPage(){
