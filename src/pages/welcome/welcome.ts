@@ -22,7 +22,10 @@ export class WelcomePage {
   public middleName: string;
   public customerLabel: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewController: ViewController) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private viewController: ViewController) {
     this.customerData = navParams.get('customerData');
     this.customer = this.customerData['customer'];
 
@@ -30,6 +33,7 @@ export class WelcomePage {
     this.lastName = this.customer['lastName'];
     this.middleName = this.customer['middleName'];
     this.customerLabel = this.customer['label'];
+
   }
 
   ionViewDidLoad() {
@@ -37,10 +41,11 @@ export class WelcomePage {
   }
 
   continueToDashboard(){
+    this.navCtrl.setRoot('DashboardPage', {customerData: this.customerData});
     //console.log('Continue to dashboard!');
-    this.navCtrl.setRoot('DashboardPage').then(() =>{
-      this.navCtrl.popToRoot();
-    });
+    // this.navCtrl.setRoot('DashboardPage').then(() =>{
+    //   this.navCtrl.popToRoot();
+    // });
   }
 
   backToLoginPage(){

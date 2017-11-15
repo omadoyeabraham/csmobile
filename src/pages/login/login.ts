@@ -1,8 +1,7 @@
-// import { StatusBar } from '@ionic-native/status-bar';
 import { LoginProvider } from './../../providers/login/login';
 import { ConstantProvider } from './../../providers/constant/constant';
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, ModalController, LoadingController } from 'ionic-angular';
+import { IonicPage, LoadingController, NavController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 
 /**
@@ -23,12 +22,11 @@ export class LoginPage {
   public password: AbstractControl;
 
   constructor(
-    private viewController: ViewController, 
     private formBuilder: FormBuilder,
     private loginProvider: LoginProvider,
     private constant: ConstantProvider,
-    private welcomeModal: ModalController,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private navController: NavController
   ) {
     this.formGroup = this.formBuilder.group(
       {
@@ -51,7 +49,7 @@ export class LoginPage {
    * Close the Login Modal page
    */
   closeLoginPage(){
-    this.viewController.dismiss();
+    this.navController.pop();
   }
 
   /**
@@ -66,8 +64,7 @@ export class LoginPage {
     let username = this.username.value;
     let password = this.password.value;
     this.loginProvider.customerLogin(username.trim(), password.trim()).subscribe(data => {
-      let welcomePage = this.welcomeModal.create('WelcomePage', {customerData: data});
-      welcomePage.present();
+      this.navController.push('WelcomePage', {customerData: data});
       loader.dismiss();
     },
     err => {

@@ -1,4 +1,4 @@
-<ion-menu [content]="mycontent" persistent="true">
+<ion-menu [content]="mycontent" persistent="true" side="left" persistent="true">
     <ion-header>
         <ion-toolbar>
             <ion-title>Side Menu</ion-title>
@@ -15,4 +15,4 @@
     </ion-content>
 </ion-menu>
 
-<ion-nav #mycontent [root]="rootPage" swipeBackEnabled="false"></ion-nav>
+<ion-nav id="mycontent" #mycontent [root]="rootPage" swipeBackEnabled="false"></ion-nav>

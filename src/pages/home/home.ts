@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { MenuController, NavController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -9,7 +9,7 @@ export class HomePage {
   public username = "";
   public password = "";
 
-  constructor(private loginModal: ModalController) {
+  constructor(private menuController: MenuController, private navController: NavController) {
 
   }
 
@@ -17,8 +17,7 @@ export class HomePage {
    * Open the login modal page
    */
   openLoginModal(){
-    let loginPage = this.loginModal.create('LoginPage');
-    loginPage.present();
+    this.navController.push('LoginPage');
   }
 
 }
