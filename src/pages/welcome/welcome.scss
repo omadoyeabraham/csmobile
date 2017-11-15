@@ -10,7 +10,7 @@ page-welcome {
         .card-title {
             text-align: center;
             text-transform: uppercase;
-            font-size: 1.2em;
+            font-size: 14px;
             width: 100%;
             font-weight: 400;
             color: #666;
@@ -21,8 +21,19 @@ page-welcome {
         }
         ion-card img {
             display: block;
-            max-width: 100%;
+            max-width: 100px;
             height: auto;
+            margin: 0px auto;
+            margin-bottom: 20px;
+        }
+        .customer-label {
+          font-size: 22px;
+          color: #666666;
+        }
+        .cancel {
+          margin-top: 20px;
+          color: red;
+          font-size: 14px;
         }
     }
 }

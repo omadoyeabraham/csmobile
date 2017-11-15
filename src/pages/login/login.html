@@ -7,7 +7,7 @@
 
 <ion-header>
 
-    <ion-navbar hideBackButton>
+    <ion-navbar class="login-navbar">
         <ion-title>Client login</ion-title>
 
         <ion-buttons end>
@@ -43,6 +43,10 @@
                 <ion-input type="password" formControlName="password"></ion-input>
             </ion-item>
         </ion-list>
-        <button ion-button type="submit" [disabled]="!formGroup.valid" (click)="loginUser()">Submit</button>
+        <button ion-button block type="submit" [disabled]="!formGroup.valid" (click)="loginUser()">Login</button>
     </form>
+
+    <div class="help-centre">
+      Help Centre
+    </div>
 </ion-content>
