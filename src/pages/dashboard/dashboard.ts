@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams  } from 'ionic-angular';
 
 /**
  * Generated class for the DashboardPage page.
@@ -14,12 +14,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'dashboard.html',
 })
 export class DashboardPage {
+  private customerData: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.customerData = navParams.get('customerData');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DashboardPage');
+    console.log(this.customerData);
   }
+
+  ionViewWillEnter(){
+   //this.menuController.enable(true, "mycontent");
+  }
+
 
 }
