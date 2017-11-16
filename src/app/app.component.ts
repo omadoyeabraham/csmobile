@@ -19,7 +19,7 @@ export class MyApp {
 
   pages: PageInterface[] = [
     {title: 'Dashboard', pageName: 'DashboardPage', icon: 'home'},
-    {title: 'Stockbroking', pageName: 'StbSummaryPage', icon: 'folder-open' }
+    {title: 'Stockbroking', pageName: 'StbPage', icon: 'folder-open' }
   ];
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {

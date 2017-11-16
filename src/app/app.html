@@ -1,16 +1,17 @@
 <ion-menu [content]="mycontent" persistent="true" side="left" persistent="true">
-    <ion-header>
+    <!-- <ion-header >
         <ion-toolbar>
-            <ion-title>Side Menu</ion-title>
+            <ion-title></ion-title>
         </ion-toolbar>
-    </ion-header>
+    </ion-header> -->
 
-    <ion-content>
-        <ion-list>
-            <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">
-                  <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>
-                  {{ p.title }}
-                </button>
+    <ion-content class="bg-black">
+        <ion-list no-lines>
+            <ion-item-divider class="bg-black no-border"></ion-item-divider>
+            <button ion-item menuClose class="bg-black" *ngFor="let p of pages" (click)="openPage(p)">
+              <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>
+              {{ p.title }}
+            </button>
         </ion-list>
     </ion-content>
 </ion-menu>

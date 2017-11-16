@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-
 /**
- * Generated class for the StbPage page.
+ * Generated class for the PortfolioHoldingsPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -11,21 +10,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-stb',
-  templateUrl: 'stb.html',
+  selector: 'page-portfolio-holdings',
+  templateUrl: 'portfolio-holdings.html',
 })
-export class StbPage {
-
-  StbSummaryPage: any;
-  PortfolioHoldingsPage: any;
+export class PortfolioHoldingsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.StbSummaryPage = 'StbSummaryPage';
-    this.PortfolioHoldingsPage = 'PortfolioHoldingsPage';
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad StbPage');
+    console.log('ionViewDidLoad PortfolioHoldingsPage');
   }
 
 }
