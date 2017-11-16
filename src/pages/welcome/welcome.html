@@ -15,9 +15,9 @@
         </ion-card-content>
         <img src="../assets/imgs/logo.png" width="100" />
         <button ion-button full color="primary" (click)="continueToDashboard()">Continue</button>
-        <div class="cancel">
-          <ion-icon name="log-out"></ion-icon>
-          Cancel
+        <div class="cancel" (click)="backToLoginPage()">
+            <ion-icon name="log-out"></ion-icon>
+            Cancel
         </div>
     </ion-card>
 

@@ -27,13 +27,16 @@ page-welcome {
             margin-bottom: 20px;
         }
         .customer-label {
-          font-size: 22px;
-          color: #666666;
+            font-size: 22px;
+            color: #666666;
         }
         .cancel {
-          margin-top: 20px;
-          color: red;
-          font-size: 14px;
+            margin-top: 20px;
+            color: red;
+            font-size: 14px;
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 }
