@@ -18,10 +18,18 @@ export class StbPage {
 
   StbSummaryPage: any;
   PortfolioHoldingsPage: any;
+  TradePage: any;
+  TradeHistoryPage: any;
+  WatchlistPage: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+    // The various components are lazy-loaded by ionic using strings. This improves the apps performance.
     this.StbSummaryPage = 'StbSummaryPage';
     this.PortfolioHoldingsPage = 'PortfolioHoldingsPage';
+    this.TradePage = 'TradePage';
+    this.TradeHistoryPage = 'TradeHistoryPage';
+    this.WatchlistPage = 'WatchlistPage';
   }
 
   ionViewDidLoad() {
