@@ -18,7 +18,8 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   pages: PageInterface[] = [
-    {title: 'Dashboard', pageName: 'DashboardPage', icon: 'home'}
+    {title: 'Dashboard', pageName: 'DashboardPage', icon: 'home'},
+    {title: 'Stockbroking', pageName: 'StbSummaryPage', icon: 'folder-open' }
   ];
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
@@ -37,7 +38,7 @@ export class MyApp {
   }
 
   isActive(page: PageInterface){
-    
+
   }
 
 }
