@@ -15,8 +15,7 @@ export class SwitchPortfolioComponent {
   text: string;
 
   constructor() {
-    console.log('Hello SwitchPortfolioComponent Component');
-    this.text = 'Hello World';
+    this.text = 'Portfolio Switching Portfolio is here';
   }
 
 }

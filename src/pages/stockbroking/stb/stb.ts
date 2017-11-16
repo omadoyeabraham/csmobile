@@ -22,6 +22,7 @@ export class StbPage {
   TradeHistoryPage: any;
   WatchlistPage: any;
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
 
     // The various components are lazy-loaded by ionic using strings. This improves the apps performance.
