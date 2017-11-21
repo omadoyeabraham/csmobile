@@ -15,7 +15,14 @@ export class SwitchPortfolioComponent {
   text: string;
 
   constructor() {
-    this.text = 'Portfolio Switching Portfolio is here';
+
+  }
+
+  /**
+   * Method called when a user slides to a slide component using the slider
+   */
+  slideChanged() {
+
   }
 
 }
