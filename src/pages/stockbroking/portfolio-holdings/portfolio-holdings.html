@@ -6,15 +6,108 @@
 -->
 <ion-header>
   <ion-navbar hideBackButton>
+
     <ion-buttons left>
       <button ion-button icon-only menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>Portfolio Holdings</ion-title>
+
+    <ion-title>
+      <span> Portfolio Holdings</span>
+    </ion-title>
+
+    <ion-buttons end>
+      <span class="indexDetails">{{selectedPortfolioIndex}} of {{numberOfPortfolios}}</span>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <switch-portfolio></switch-portfolio>
+<ion-content no-padding>
+  <switch-portfolio (portfolioHasChanged)="onPortfolioChange($event)"></switch-portfolio>
+
+      <!-- Stocks and Bonds -->
+      <div no-padding>
+        <ion-segment [(ngModel)]="holdingType">
+          <ion-segment-button value="stocks">
+            Stocks
+          </ion-segment-button>
+          <ion-segment-button value="bonds">
+            Bonds
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+
+      <div [ngSwitch]="holdingType">
+
+        <!-- Stock Holdings -->
+        <div *ngSwitchCase="'stocks'">
+          <ion-list class="mt10 holdings-list">
+            <ion-item class="">
+              <ion-grid *ngFor="let test of tests">
+                <ion-row>
+                  <ion-col><strong>7UP</strong></ion-col>
+                  <ion-col class="font-size-12 align-right">
+                    <!-- Gain/Loss: <span class="font-red">&#8358;(20.92) (10.84%)</span> -->
+                     Gain/Loss: <span class="font-red">(10.84%)</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="font-size-12">WAC: &#8358;2.50</ion-col>
+                  <ion-col class="font-size-12 align-right">Qty: 2</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="font-size-12">
+                    Cur Price: &#8358;86.07 <span class="font-red">(4.37%)</span>
+                  </ion-col>
+                  <ion-col class="font-size-12 align-right">Val: &#8358;172.14</ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <!-- Bond Holdings -->
+        <div *ngSwitchCase="'bonds'">
+          <ion-list class="mt10 holdings-list holdings-bonds">
+            <ion-item class="">
+              <ion-grid *ngFor="let test of tests">
+                <ion-row>
+                  <ion-col>
+                    Security
+                  </ion-col>
+                  <ion-col class="align-right">
+                   FGS2019S1
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="">Units</ion-col>
+                  <ion-col class=" align-right">25</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="">
+                    Accrued Coupon
+                  </ion-col>
+                  <ion-col class="align-right">Val: &#8358;172.14</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="">
+                    Face Value
+                  </ion-col>
+                  <ion-col class="align-right">Val: &#8358;17,982.14</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="">
+                    Maturity Date
+                  </ion-col>
+                  <ion-col class="align-right">22-Mar-2019</ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ion-list>
+        </div>
+
+      </div>
+
 </ion-content>

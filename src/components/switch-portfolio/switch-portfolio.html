@@ -1,41 +1,31 @@
 <!-- Generated template for the SwitchPortfolioComponent component -->
 
-<!-- <div class="container-fluid">
+<div class="bg-blue">
+  <ion-slides pager style="height: 100px" (ionSlideDidChange)="portfolioChanged()">
 
-  <div class="row">
-    <div class="col">
-      Cedar Chibuzor Chinwuba (MA)
-    </div>
-  </div>
+    <ion-slide *ngFor="let portfolio of portfolios">
+      <ion-grid>
 
-  <div class="row">
-    <div class="col">
+        <ion-row>
+          <ion-col>
+           {{portfolio.name}}
+          </ion-col>
+        </ion-row>
 
-      Cedar Chibuzor Chinwuba (MA)
-    </div>
-    <div class="col">
+        <ion-row>
+          <ion-col class="swipe" col-3>
+            <span>&lt; SWIPE &gt;</span>
+          </ion-col>
+          <ion-col class="pb0" style="text-align: right" col-9>
+            <h6 class="m0 font-size-13">Portfolio Value</h6>
+            <h4 class="m0 font-size-20s">&#8358; {{portfolio.value}}</h4>
+          </ion-col>
+        </ion-row>
 
-      Cedar Chibuzor Chinwuba (MA)
-    </div>
-  </div>
-</div> -->
+      </ion-grid>
+    </ion-slide>
 
-<div class="bg-red">
-    <ion-slides pager style="height: 100px" class="bg-blue">
-
-      <ion-slide style="background-color: green">
-        <h2>Slide 1</h2>
-      </ion-slide>
-
-      <ion-slide style="background-color: blue">
-        <h2>Slide 2</h2>
-      </ion-slide>
-
-      <ion-slide style="background-color: red">
-        <h2>Slide 3</h2>
-      </ion-slide>
-
-    </ion-slides>
-  </div>
+  </ion-slides>
+</div>
 
 

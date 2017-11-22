@@ -1,3 +1,14 @@
 page-stb-summary {
 
+  .portfolio-summary-wrapper {
+    ion-item {
+      min-height: 25px !important;
+      height: 25px !important;
+      font-size: 14px;
+      .item-inner {
+        border: none !important;
+      }
+    }
+  }
+
 }

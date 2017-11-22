@@ -1,3 +1,32 @@
 switch-portfolio {
 
+  .swiper-pagination-bullets {
+    display: none;
+  }
+
+  ion-slide {
+    background: #1A2155;
+    color: #FFFFFF;
+
+    .slide-zoom {
+      // position: absolute;
+      // width: 100%;
+      // height: 100%;
+      text-align: left;
+    }
+  }
+
+  .swipe {
+    align-self: flex-end;
+
+    span {
+      background: #FFF;
+      color: #1A2155;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 5px;
+      border-radius: 5px;
+    }
+  }
+
 }

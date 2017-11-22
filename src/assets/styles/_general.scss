@@ -18,7 +18,7 @@
 }
 
 .bg-blue {
-  background: blue;
+  background: #1A2155;
 }
 
 .bg-light-blue {
@@ -36,6 +36,7 @@
 .w5p{width: 5%;}.w10p{width: 10%;}.w12p{width: 12%;}.w15p{width: 15%;}.w20p{width: 20%;}.w25p{width: 25%;}.w30p{width: 30%;}
 .w35p{width: 35%;}.w40p{width: 40%;}.w45p{width: 45%;}.w50p{width: 50%;} .w60p{width: 60%;} .w70p{width: 70%;}
 .w80p{width: 80%;}.w88p{width: 88%;}.w85p{width: 85%;}.w90p{width: 90%;}.w100p{width: 100%;}
+.m0{margin: 0 !important} .mt0{margin-top: 0px !important}.mb0{margin-bottom: 0px !important}.ml0{margin-left: 0px !important}.mr0{margin-right: 0px !important}
 .m1{  margin: 1px;}.mt1{margin-top: 1px}.mb1{margin-bottom: 1px}.ml1{margin-left: 1px}.mr1{margin-right: 1px}
 .m2{  margin: 2px;}.mt2{margin-top: 2px}.mb2{margin-bottom: 2px}.ml2{margin-left: 2px}.mr2{margin-right: 2px}
 .m5{  margin: 5px;}.mt5{margin-top: 5px}.mb5{margin-bottom: 5px}.ml5{margin-left: 5px}.mr5{margin-right: 5px}
@@ -62,3 +63,22 @@
   }
 }
 
+/**
+** Font Color
+**/
+.font-red {
+  color: red !important;
+}
+.font-green {
+  color: green !important;
+}
+
+/**
+* Alignment
+**/
+.align-left {
+  text-align: left !important;
+}
+.align-right {
+  text-align: right !important;
+}

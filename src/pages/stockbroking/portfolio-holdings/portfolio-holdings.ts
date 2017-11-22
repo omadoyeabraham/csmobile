@@ -15,11 +15,29 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PortfolioHoldingsPage {
 
+  selectedPortfolioIndex: number = 1;
+  numberOfPortfolios: number = 3;
+
+  // The initial tab of holdings shown
+  holdingType: string = "stocks";
+
+  tests = [1,2,3,4,5,6,7];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PortfolioHoldingsPage');
+  }
+
+  /**
+   * Handle the event emitted by the portfolio switching component when the user changes their portfolio
+   *
+   * @param data
+   */
+  onPortfolioChange(data) {
+    this.selectedPortfolioIndex = data.currentPortfolio
+    this.numberOfPortfolios = data.numberOfPortfolios
   }
 
 }

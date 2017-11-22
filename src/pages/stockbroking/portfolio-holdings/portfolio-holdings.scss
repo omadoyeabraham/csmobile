@@ -1,3 +1,45 @@
 page-portfolio-holdings {
+  .indexDetails {
+    color: #FFF
+  }
+
+  ion-label {
+    margin: 0 !important
+  }
+
+  .holdings-bonds {
+    ion-grid {
+      ion-row {
+        ion-col {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .holdings-list {
+    ion-grid {
+      ion-row {
+        ion-col {
+          padding-top: 1px !important;
+          padding-bottom: 3px !important;
+        }
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    ion-grid:nth-child(even) {
+      background: #EEEEEE;
+    }
+    ion-item {
+      padding-left: 0px;
+      .item-inner {
+        padding-right: 0px !important;
+      }
+    }
+  }
+
 
 }
