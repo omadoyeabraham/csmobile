@@ -13,6 +13,7 @@ import { CustomerProvider } from '../providers/customer/customer';
 import { CashAccountProvider } from '../providers/cash-account/cash-account';
 import { FixedIncomeProvider } from '../providers/fixed-income/fixed-income';
 import { StockbrokingProvider } from '../providers/stockbroking/stockbroking';
+import { ChartsProvider } from '../providers/charts/charts';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { StockbrokingProvider } from '../providers/stockbroking/stockbroking';
     CustomerProvider,
     CashAccountProvider,
     FixedIncomeProvider,
-    StockbrokingProvider
+    StockbrokingProvider,
+    ChartsProvider
   ]
 })
 export class AppModule {}

@@ -20,8 +20,11 @@ export class StbSummaryPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
+  /**
+   * Ionic calls this function after this page is successfully loaded
+   */
   ionViewDidLoad() {
-    console.log('ionViewDidLoad StbSummaryPage');
+    // Initialize and draw the charts showing the user's portfolio performance and allocation
   }
 
 }
