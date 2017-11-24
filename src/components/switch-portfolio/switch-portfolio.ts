@@ -20,7 +20,7 @@ export class SwitchPortfolioComponent {
   numberOfPortfolios: number
 
   // The index of the currently selected portfolio
-  currentPortfolioIndex:number
+  currentPortfolioIndex: number
 
   // Expose the slides in the slider to the class for tracking and appropriate update
   @ViewChild(Slides) slides: Slides;

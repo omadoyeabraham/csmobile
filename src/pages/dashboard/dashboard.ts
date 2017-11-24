@@ -29,5 +29,14 @@ export class DashboardPage {
    //this.menuController.enable(true, "mycontent");
   }
 
+  /**
+   * Navigate to various pages using ionic's nav controller
+   *
+   * @param pageName String use by angular to lazyload the page component
+   */
+  goToPage(pageName: string) {
+    this.navCtrl.push(pageName);
+  }
+
 
 }
