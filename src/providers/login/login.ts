@@ -20,15 +20,13 @@ export class LoginProvider {
   private baseURL: string = "";
 
   constructor(
-    private http: Http, 
+    private http: Http,
     private constant: ConstantProvider
-    ) {
-    console.log('Hello LoginProvider Provider');
-  }
+    ) {}
 
   /**
    * Handles customer login
-   * 
+   *
    * @param username string
    * @param password string
    */
@@ -52,7 +50,7 @@ export class LoginProvider {
   }
 
   /**
-   * 
+   *
    * @param res The response object
    */
   private getLoginResponse(res: Response){
@@ -60,7 +58,7 @@ export class LoginProvider {
   }
 
   /**
-   * 
+   *
    * @param res The response object
    */
   private getExtractedData(res: Response){
@@ -68,11 +66,11 @@ export class LoginProvider {
   }
 
   /**
-   * 
+   *
    * @param error The response object
    */
   private getLoginError(error: Response | any){
-    return Observable.throw(error.status || "Server error.");    
+    return Observable.throw(error.status || "Server error.");
   }
 
 }

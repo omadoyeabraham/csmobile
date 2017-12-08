@@ -11,9 +11,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ChartsProvider {
 
-  constructor(public http: Http) {
-    console.log('Hello ChartsProvider Provider');
-  }
+  constructor(public http: Http) {}
 
   /**
    * Return the configuration, styling and data necessary to draw a piechart

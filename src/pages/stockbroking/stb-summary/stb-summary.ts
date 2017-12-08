@@ -5,6 +5,8 @@ import * as Highcharts from 'highcharts';
 
 // Services
 import { ChartsProvider } from '../../../providers/charts/charts';
+import { StbStore } from '../../../providers/stockbroking/stb-store';
+import { IPortfolio } from '../../../models/PortfolioInterface';
 
 /**
  * Generated class for the StbSummaryPage page.
@@ -20,22 +22,29 @@ import { ChartsProvider } from '../../../providers/charts/charts';
 })
 export class StbSummaryPage {
 
-  chartType: string = "portfolioPerformance";
+  // Default chart type shown on component load
+  chartType: string = "portfolioPerformance"
+
+  portfolios: Array<IPortfolio>
+  currentPortfolio: IPortfolio
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public chartProvider: ChartsProvider) {
+              public chartProvider: ChartsProvider,
+              private stbStore: StbStore) {
+
+    this.portfolios = this.stbStore.portfolios
+    this.currentPortfolio = this.stbStore.currentPortfolio
   }
 
   /**
    * Ionic calls this function afters this page is successfully loaded
    */
   ionViewDidLoad() {
-    // Initialize and draw the charts showing the user's portfolio performance and allocation
 
+    // Initialize and draw the charts showing the user's portfolio performance and allocation
     const portfolioAllocationChartObject = this.chartProvider.getPieChart([]);
     const portfolioPerformanceChartObject = this.chartProvider.getBarChart([]);
-
     Highcharts.chart('portfolioAllocationChart', portfolioAllocationChartObject);
     Highcharts.chart('portfolioPerformanceChart', portfolioPerformanceChartObject);
 

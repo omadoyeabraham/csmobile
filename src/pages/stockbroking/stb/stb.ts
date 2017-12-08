@@ -33,8 +33,6 @@ export class StbPage {
     this.WatchlistPage = 'WatchlistPage';
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad StbPage');
-  }
+  ionViewDidLoad() {}
 
 }

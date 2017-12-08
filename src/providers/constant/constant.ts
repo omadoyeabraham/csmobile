@@ -8,10 +8,10 @@ import 'rxjs/add/operator/map';
 
   Due to my lack of understanding of TypeScript
   I created this service to house constants
-  Please pardon me. I would have used Structs to 
-  implement this class. If you are better off than 
-  me in TypeScript please change this class to an 
-  object that does not need to be instantiated for a 
+  Please pardon me. I would have used Structs to
+  implement this class. If you are better off than
+  me in TypeScript please change this class to an
+  object that does not need to be instantiated for a
   better performance - Olaleye Osunsanya
 
   See https://angular.io/guide/dependency-injection for more info on providers
@@ -32,13 +32,11 @@ public toastPosition = "top";
   constructor(
     public http: Http,
     private toastController: ToastController
-  ) {
-    console.log('Hello ConstantProvider Provider');
-  }
+  ) {}
 
   /**
    * Gets the toast error message
-   * 
+   *
    * @param status Response error status
    */
   getToastMessage(message: string){
@@ -49,6 +47,6 @@ public toastPosition = "top";
     });
     toaster.present();
   }
-  
+
 
 }

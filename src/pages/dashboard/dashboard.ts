@@ -21,7 +21,6 @@ export class DashboardPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DashboardPage');
     console.log(this.customerData);
   }
 

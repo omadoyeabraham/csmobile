@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
+import { IPortfolio } from '../../models/PortfolioInterface';
+import { StbStore } from '../../providers/stockbroking/stb-store';
+import { StbGetters } from '../../providers/stockbroking/stb-getters';
 
 /**
  * Generated class for the SwitchPortfolioComponent component.
@@ -14,7 +17,10 @@ import { Slides } from 'ionic-angular';
 export class SwitchPortfolioComponent {
 
   // Portfolios owned by the user
-  portfolios: Array<object>
+  portfolios: Array<IPortfolio>
+
+  // The currently selected portfolio
+  currentPortfolio: IPortfolio
 
   // Total number of the user's portfolios
   numberOfPortfolios: number
@@ -22,30 +28,23 @@ export class SwitchPortfolioComponent {
   // The index of the currently selected portfolio
   currentPortfolioIndex: number
 
+  // Various calculated fields about the currently selected portfolio
+  currentPortfolioTotalValue: number
+
   // Expose the slides in the slider to the class for tracking and appropriate update
   @ViewChild(Slides) slides: Slides;
 
   // Used to emit an event to the parent component whenever the selected portfolio is changed.
   @Output() portfolioHasChanged = new EventEmitter()
 
-  constructor() {
-    this.portfolios = [
-      {
-        name: "Cedar Chinwuba (MA)",
-        value: "234,345,444.45"
-      },
-      {
-        name: "Cedar Chinwuba Chibuzor",
-        value: "234,345,444.45"
-      },
-      {
-        name: "Cedar Chinwuba Joint",
-        value: "234,345,444.45"
-      }
-    ]
+  constructor(private stbStore: StbStore, private stbGetters: StbGetters) {
+    this.portfolios = this.stbStore.portfolios
+    this.currentPortfolio = this.stbStore.currentPortfolio
 
     this.numberOfPortfolios = this.portfolios.length
     this.currentPortfolioIndex = 1;
+
+    this.currentPortfolioTotalValue = this.stbGetters.getCurrentPortfolioTotalValue()
   }
 
   /**

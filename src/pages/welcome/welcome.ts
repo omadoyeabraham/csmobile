@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { StbStore } from '../../providers/stockbroking/stb-store';
 
 /**
  * Generated class for the WelcomePage page.
@@ -23,9 +24,10 @@ export class WelcomePage {
   public customerLabel: string;
 
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
-    private viewController: ViewController) {
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private viewController: ViewController,
+   ) {
     this.customerData = navParams.get('customerData');
     this.customer = this.customerData['customer'];
 
@@ -37,7 +39,7 @@ export class WelcomePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad WelcomePage');    
+
   }
 
   continueToDashboard(){

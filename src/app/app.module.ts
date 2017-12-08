@@ -14,6 +14,9 @@ import { CashAccountProvider } from '../providers/cash-account/cash-account';
 import { FixedIncomeProvider } from '../providers/fixed-income/fixed-income';
 import { StockbrokingProvider } from '../providers/stockbroking/stockbroking';
 import { ChartsProvider } from '../providers/charts/charts';
+import { StbPortfolioProvider } from '../providers/stockbroking/stb-portfolio';
+import { StbStore } from '../providers/stockbroking/stb-store';
+import { StbGetters } from '../providers/stockbroking/stb-getters';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,10 @@ import { ChartsProvider } from '../providers/charts/charts';
     CashAccountProvider,
     FixedIncomeProvider,
     StockbrokingProvider,
-    ChartsProvider
+    ChartsProvider,
+    StbPortfolioProvider,
+    StbStore,
+    StbGetters
   ]
 })
 export class AppModule {}

@@ -3,6 +3,7 @@ import { ConstantProvider } from './../../providers/constant/constant';
 import { Component } from '@angular/core';
 import { IonicPage, LoadingController, NavController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
+import { StbStore } from '../../providers/stockbroking/stb-store';
 
 /**
  * Generated class for the LoginPage page.
@@ -26,7 +27,8 @@ export class LoginPage {
     private loginProvider: LoginProvider,
     private constant: ConstantProvider,
     private loadingController: LoadingController,
-    private navController: NavController
+    private navController: NavController,
+    private stbStore: StbStore
   ) {
     this.formGroup = this.formBuilder.group(
       {
@@ -39,7 +41,7 @@ export class LoginPage {
   }
 
   /**
-   * 
+   *
    */
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
@@ -53,7 +55,7 @@ export class LoginPage {
   }
 
   /**
-   * 
+   *
    */
   loginUser(){
     let loader = this.loadingController.create({
@@ -64,6 +66,10 @@ export class LoginPage {
     let username = this.username.value;
     let password = this.password.value;
     this.loginProvider.customerLogin(username.trim(), password.trim()).subscribe(data => {
+
+      // Store the user's stockbroking data
+      this.stbStore.storeStbData(data)
+
       this.navController.push('WelcomePage', {customerData: data});
       loader.dismiss();
     },
@@ -75,7 +81,7 @@ export class LoginPage {
       if(err === null){
             this.constant.getToastMessage(this.constant.toastMessageNetworkError);
           }
-          loader.dismiss(); 
+          loader.dismiss();
     });
   }
 
