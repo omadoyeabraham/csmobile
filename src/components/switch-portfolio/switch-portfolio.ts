@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { IPortfolio } from '../../models/PortfolioInterface';
 import { StbStore } from '../../providers/stockbroking/stb-store';
@@ -34,17 +34,29 @@ export class SwitchPortfolioComponent {
   // Expose the slides in the slider to the class for tracking and appropriate update
   @ViewChild(Slides) slides: Slides;
 
-  // Used to emit an event to the parent component whenever the selected portfolio is changed.
-  @Output() portfolioHasChanged = new EventEmitter()
-
   constructor(private stbStore: StbStore, private stbGetters: StbGetters) {
-    this.portfolios = this.stbStore.portfolios
-    this.currentPortfolio = this.stbStore.currentPortfolio
 
-    this.numberOfPortfolios = this.portfolios.length
-    this.currentPortfolioIndex = 1;
+    /**
+     * Subscribe to the observable from the stbStore and populate this components instance variables
+     */
+    this.stbStore.portfoliosSubject.subscribe(
+      data => {
+        this.portfolios = data
+        this.numberOfPortfolios = this.portfolios.length
+      },
+      error => {
+        console.error('Error occured while getting portfolios')
+      }
+    )
 
-    this.currentPortfolioTotalValue = this.stbGetters.getCurrentPortfolioTotalValue()
+    this.stbStore.currentPortfolioSubject.subscribe(
+      data => {
+        this.currentPortfolio = data
+        this.currentPortfolioTotalValue = this.stbGetters.getCurrentPortfolioTotalValue()
+        this.currentPortfolioIndex = this.stbGetters.getCurrentPortfolioIndex()
+      }
+    )
+
   }
 
   /**
@@ -52,19 +64,15 @@ export class SwitchPortfolioComponent {
    */
   portfolioChanged() {
     // The current portfolio index is +1 because the portfolios are in a zero indexed array
-    this.currentPortfolioIndex = this.slides.getActiveIndex() + 1;
 
-    // Emit the event detailing the index of the currently selected portfolio, when a user changes the selected portfolio
+    let activeSlideIndex = this.slides.getActiveIndex()
 
     // Hack to ensure that we do not overshoot the number of portfolios index
-    if (this.currentPortfolioIndex > this.numberOfPortfolios) {
-      this.currentPortfolioIndex = this.numberOfPortfolios;
+    if (activeSlideIndex > this.numberOfPortfolios) {
+      activeSlideIndex = this.numberOfPortfolios;
     }
 
-    this.portfolioHasChanged.emit({
-      currentPortfolio: this.currentPortfolioIndex,
-      numberOfPortfolios: this.numberOfPortfolios
-    })
+    this.stbStore.setCurrentPortfolio(activeSlideIndex)
 
   }
 

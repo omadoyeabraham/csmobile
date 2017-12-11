@@ -7,6 +7,7 @@ import * as Highcharts from 'highcharts';
 import { ChartsProvider } from '../../../providers/charts/charts';
 import { StbStore } from '../../../providers/stockbroking/stb-store';
 import { IPortfolio } from '../../../models/PortfolioInterface';
+import { StbGetters } from '../../../providers/stockbroking/stb-getters';
 
 /**
  * Generated class for the StbSummaryPage page.
@@ -25,16 +26,28 @@ export class StbSummaryPage {
   // Default chart type shown on component load
   chartType: string = "portfolioPerformance"
 
-  portfolios: Array<IPortfolio>
+  /**
+   * Class variables
+   */
+  initialCurrentPortfolioSubject: any
   currentPortfolio: IPortfolio
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public chartProvider: ChartsProvider,
-              private stbStore: StbStore) {
+              private stbStore: StbStore,
+              private stbGetters: StbGetters) {
 
-    this.portfolios = this.stbStore.portfolios
-    this.currentPortfolio = this.stbStore.currentPortfolio
+    /**
+     * Subscribe to the BehaviorSubject from the stbStore and use the data appropriately
+     * This Observer is used so we can get the initial data to be displayed
+     */
+    this.stbStore.currentPortfolioSubject.subscribe(
+      data => {
+        this.currentPortfolio = data
+      }
+    )
+
   }
 
   /**
@@ -42,11 +55,28 @@ export class StbSummaryPage {
    */
   ionViewDidLoad() {
 
+  /**
+   * Subscribe to the BehaviorSubject from the stbStore and use the data appropriately
+   * This observer is used after the component has loaded to continue observing the data stream
+   */
+    this.stbStore.currentPortfolioSubject.subscribe(
+      data => {
+        this.currentPortfolio = data
+
+        // Update the charts
+        let portfolioAllocationChartObject = this.stbGetters.getCurrentPortfolioStockAllocationChartData()
+        let portfolioPerformanceChartObject = this.stbGetters.getCurrentPortfolioStockPerformanceChartData()
+        Highcharts.chart('portfolioAllocationChart', portfolioAllocationChartObject)
+        Highcharts.chart('portfolioPerformanceChart', portfolioPerformanceChartObject)
+
+      }
+    )
+
     // Initialize and draw the charts showing the user's portfolio performance and allocation
-    const portfolioAllocationChartObject = this.chartProvider.getPieChart([]);
-    const portfolioPerformanceChartObject = this.chartProvider.getBarChart([]);
-    Highcharts.chart('portfolioAllocationChart', portfolioAllocationChartObject);
-    Highcharts.chart('portfolioPerformanceChart', portfolioPerformanceChartObject);
+    let portfolioAllocationChartObject = this.stbGetters.getCurrentPortfolioStockAllocationChartData()
+    let portfolioPerformanceChartObject = this.stbGetters.getCurrentPortfolioStockPerformanceChartData()
+    Highcharts.chart('portfolioAllocationChart', portfolioAllocationChartObject)
+    Highcharts.chart('portfolioPerformanceChart', portfolioPerformanceChartObject)
 
   }
 

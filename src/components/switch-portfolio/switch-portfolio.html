@@ -10,7 +10,16 @@
           <ion-col>
            {{currentPortfolio.label}}
           </ion-col>
+          <ion-col style="text-align: right">
+            {{currentPortfolioIndex}} of {{numberOfPortfolios}}
+          </ion-col>
         </ion-row>
+
+        <!-- <ion-row>
+          <ion-col style="text-align: right">
+            {{currentPortfolioIndex}} of {{numberOfPortfolios}}
+          </ion-col>
+        </ion-row> -->
 
         <ion-row>
           <ion-col class="swipe" col-3>
@@ -18,7 +27,9 @@
           </ion-col>
           <ion-col class="pb0" style="text-align: right" col-9>
             <h6 class="m0 font-size-13">Portfolio Value</h6>
-            <h4 class="m0 font-size-20s">&#8358; {{currentPortfolioTotalValue}}</h4>
+            <h4 class="m0 font-size-20s">
+              &#8358;{{currentPortfolioTotalValue | number:'1.2-2'}}
+            </h4>
           </ion-col>
         </ion-row>
 

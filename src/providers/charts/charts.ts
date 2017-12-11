@@ -62,14 +62,7 @@ export class ChartsProvider {
       series: [{
         name: 'SECTOR PERFORMANCE',
         colorByPoint: true,
-        data: [
-          { name: 'IE', y: 56.33 },
-          { name: 'Chrome', y: 24.03 },
-          { name: 'Firefox', y: 10.38 },
-          { name: 'Safari', y: 4.77 },
-          { name: 'Opera', y: 0.91 },
-          { name: 'Other', y: 0.2 }
-        ]
+        data: chartData
 
       }]
     }
@@ -84,6 +77,7 @@ export class ChartsProvider {
    */
   getBarChart(chartData: Array<any> = []) {
     // Get the sector data for the portofolio and initialize variables
+    console.log(chartData)
     let dataSet = chartData
     let graphData = [{
       data: []
@@ -146,35 +140,7 @@ export class ChartsProvider {
         enabled: false
       },
       // series: graphData
-      series: [{
-        name: 'Brands',
-        colorByPoint: true,
-        data: [{
-          name: 'Microsoft Internet Explorer',
-          y: 56.33,
-          drilldown: 'Microsoft Internet Explorer'
-        }, {
-          name: 'Chrome',
-          y: 24.03,
-          drilldown: 'Chrome'
-        }, {
-          name: 'Firefox',
-          y: 10.38,
-          drilldown: 'Firefox'
-        }, {
-          name: 'Safari',
-          y: 4.77,
-          drilldown: 'Safari'
-        }, {
-          name: 'Opera',
-          y: 0.91,
-          drilldown: 'Opera'
-        }, {
-          name: 'Proprietary or Undetectable',
-          y: 0.2,
-          drilldown: null
-        }]
-      }]
+      series: graphData
     }
 
     return chartObject;

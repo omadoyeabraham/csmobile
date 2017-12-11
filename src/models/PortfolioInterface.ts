@@ -5,6 +5,7 @@ import { IPortfolioHolding } from "./PortfolioHoldingInterface";
  */
 export interface IPortfolio
 {
+  accountNo: string,
   active: boolean
   availableCash: {
     currency: string,
@@ -14,6 +15,7 @@ export interface IPortfolio
     currency: string,
     amount: string
   }
+  clearingHouseNo: string,
   costBasis: {
     currency: string,
     amount: string
@@ -52,4 +54,7 @@ export interface IPortfolio
   portfolioHoldings?: Array<IPortfolioHolding>
   portfolioType: string
   securityExchange: string
+
+  gainOrLoss?: number
+
 }

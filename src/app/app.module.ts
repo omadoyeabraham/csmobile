@@ -17,6 +17,7 @@ import { ChartsProvider } from '../providers/charts/charts';
 import { StbPortfolioProvider } from '../providers/stockbroking/stb-portfolio';
 import { StbStore } from '../providers/stockbroking/stb-store';
 import { StbGetters } from '../providers/stockbroking/stb-getters';
+import { UtilityServiceProvider } from '../providers/utility-service/utility-service';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { StbGetters } from '../providers/stockbroking/stb-getters';
     ChartsProvider,
     StbPortfolioProvider,
     StbStore,
-    StbGetters
+    StbGetters,
+    UtilityServiceProvider
   ]
 })
 export class AppModule {}

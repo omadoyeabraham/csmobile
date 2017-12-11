@@ -18,4 +18,11 @@ export interface IPortfolioHolding {
   securityType: string
   valuation: string
   valueDate: string
+
+  gainOrLoss?: number
+  percentageOfPortfolio?: number
+  percentageGainOrLoss?: number
+  totalCost?: number
+  lost?: boolean
+  gained?: boolean
 }

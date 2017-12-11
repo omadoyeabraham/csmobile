@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 import { IPortfolio } from '../../models/PortfolioInterface';
 
 /**
@@ -10,6 +11,12 @@ import { IPortfolio } from '../../models/PortfolioInterface';
  */
 @Injectable()
 export class StbStore {
+
+  /**
+   * Behaviour Subjects used for providing Observable data
+   */
+  public portfoliosSubject = new BehaviorSubject<IPortfolio[]>([])
+  public currentPortfolioSubject = new BehaviorSubject<any>({})
 
   // The stockbroking portfolios owned by the user
   public portfolios: Array<IPortfolio> = []
@@ -31,6 +38,14 @@ export class StbStore {
 
 
   constructor(public http: Http) {
+    // Subscribe to and update the currentPortfolio property whenever a new currentPortfolio is selected
+    this.currentPortfolioSubject.subscribe(
+      data => {
+        this.currentPortfolio = data
+
+      }
+    )
+
   }
 
 
@@ -51,7 +66,39 @@ export class StbStore {
       // The user has a stockbroking portfolio
       this.userHasStb = true
 
+      /**
+       * Loop through all the portfolios and perform some needed calculations
+       */
+      this.portfolios.map((portfolio) => {
+        let gainOrLoss = parseFloat(portfolio.currentValuation.amount) - parseFloat(portfolio.costBasis.amount)
+        portfolio.gainOrLoss = gainOrLoss
+      })
+
+      /**
+       * Pass / emit the data gotten on their corresponding Obsevable streams so components that connect to them can use the data.
+       * NOTE: The BehaviorSubject will pass the last value generated to new subscribers,
+       * hence it must be initialized with a default value
+       */
+      this.portfoliosSubject.next(this.portfolios)
+      this.currentPortfolioSubject.next(this.currentPortfolio)
+
     }
+  }
+
+  /**
+   * Set the current portfolio selected by the user and emit it on the appropriate Observable stream
+   *
+   * @param {any} portfolioIndex
+   * @memberof StbStore
+   */
+  setCurrentPortfolio(portfolioIndex) :void {
+    // Default to the last portfolio if we unintentionally overshoot the portfolios length
+    if(portfolioIndex > this.portfolios.length) {
+      portfolioIndex = this.portfolios.length
+    }
+
+    let currentPortfolio = this.portfolios[portfolioIndex]
+    this.currentPortfolioSubject.next(currentPortfolio)
   }
 
 }
