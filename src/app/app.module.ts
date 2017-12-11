@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
+import { IonicStorageModule } from '@ionic/storage'
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -12,12 +13,13 @@ import { ConstantProvider } from '../providers/constant/constant';
 import { CustomerProvider } from '../providers/customer/customer';
 import { CashAccountProvider } from '../providers/cash-account/cash-account';
 import { FixedIncomeProvider } from '../providers/fixed-income/fixed-income';
-import { StockbrokingProvider } from '../providers/stockbroking/stockbroking';
+import { StockbrokingProvider } from '../providers/stockbroking/stb-service';
 import { ChartsProvider } from '../providers/charts/charts';
 import { StbPortfolioProvider } from '../providers/stockbroking/stb-portfolio';
 import { StbStore } from '../providers/stockbroking/stb-store';
 import { StbGetters } from '../providers/stockbroking/stb-getters';
 import { UtilityServiceProvider } from '../providers/utility-service/utility-service';
+import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,10 @@ import { UtilityServiceProvider } from '../providers/utility-service/utility-ser
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot({
+      name: 'csmobile-client-store'
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -48,7 +53,8 @@ import { UtilityServiceProvider } from '../providers/utility-service/utility-ser
     StbPortfolioProvider,
     StbStore,
     StbGetters,
-    UtilityServiceProvider
+    UtilityServiceProvider,
+    LocalStorageProvider
   ]
 })
 export class AppModule {}

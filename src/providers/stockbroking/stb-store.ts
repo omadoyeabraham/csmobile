@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { Injectable } from '@angular/core'
+import { Http } from '@angular/http'
+import 'rxjs/add/operator/map'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
-import { IPortfolio } from '../../models/PortfolioInterface';
+import { IPortfolio } from '../../models/PortfolioInterface'
+import { Storage } from '@ionic/storage'
 
 /**
  * Observable data service used to provide stockbroking data app wide
