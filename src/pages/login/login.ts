@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { IonicPage, LoadingController, NavController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { StbStore } from '../../providers/stockbroking/stb-store';
-import { LocalStorageProvider } from '../../providers/local-storage/local-storage';
+import { StockbrokingProvider } from '../../providers/stockbroking/stb-service';
 
 /**
  * Generated class for the LoginPage page.
@@ -30,7 +30,7 @@ export class LoginPage {
     private loadingController: LoadingController,
     private navController: NavController,
     private stbStore: StbStore,
-    private localStore: LocalStorageProvider
+    private stbService: StockbrokingProvider
   ) {
     this.formGroup = this.formBuilder.group(
       {
@@ -69,13 +69,13 @@ export class LoginPage {
     let password = this.password.value;
     this.loginProvider.customerLogin(username.trim(), password.trim()).subscribe(data => {
 
-      /**
-       * Call a method on the LocalStorage provider so it is initialized, and subscribes to the various BehaviorSubject data providers that it needs.
-       */
-      this.localStore.startup()
-
       // Call the stbStore so it broadcasts the stb data, which will be picked up by the localStorage and other components
       this.stbStore.storeStbData(data)
+
+      /**
+       * Make asynchronous calls to get various data items that will be required later
+       */
+      this.stbStore.getTradeOrders(data.customer.id, 0)
 
       this.navController.push('WelcomePage', {customerData: data});
       loader.dismiss();

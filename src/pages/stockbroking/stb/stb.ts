@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { LocalStorageProvider } from '../../../providers/local-storage/local-storage';
+import { StbStore } from '../../../providers/stockbroking/stb-store';
 
 
 /**
@@ -26,7 +26,7 @@ export class StbPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public localStore: LocalStorageProvider) {
+              public stbStore: StbStore) {
 
     // The various components are lazy-loaded by ionic using strings. This improves the apps performance.
     this.StbSummaryPage = 'StbSummaryPage';
@@ -36,7 +36,7 @@ export class StbPage {
     this.WatchlistPage = 'WatchlistPage';
 
     // Ensure that old values already gotten (if applicable) is rebroadcast to all observers
-    this.localStore.broadcastOldValues()
+    this.stbStore.broadcastOldValues()
   }
 
   ionViewDidLoad() {}

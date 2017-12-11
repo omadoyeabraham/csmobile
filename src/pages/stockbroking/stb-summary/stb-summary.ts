@@ -8,7 +8,7 @@ import { ChartsProvider } from '../../../providers/charts/charts';
 import { StbStore } from '../../../providers/stockbroking/stb-store';
 import { IPortfolio } from '../../../models/PortfolioInterface';
 import { StbGetters } from '../../../providers/stockbroking/stb-getters';
-import { LocalStorageProvider } from '../../../providers/local-storage/local-storage';
+
 
 /**
  * Generated class for the StbSummaryPage page.
@@ -37,14 +37,13 @@ export class StbSummaryPage {
               public navParams: NavParams,
               public chartProvider: ChartsProvider,
               private stbStore: StbStore,
-              private stbGetters: StbGetters,
-              private localStore: LocalStorageProvider) {
+              private stbGetters: StbGetters) {
 
     /**
      * Subscribe to the BehaviorSubject from the stbStore and use the data appropriately
      * This Observer is used so we can get the initial data to be displayed
      */
-    this.localStore.stbCurrentPortfolioSubject.subscribe(
+    this.stbStore.currentPortfolioSubject.subscribe(
       data => {
         this.currentPortfolio = data
       }
@@ -61,7 +60,7 @@ export class StbSummaryPage {
    * Subscribe to the BehaviorSubject from the stbStore and use the data appropriately
    * This observer is used after the component has loaded to continue observing the data stream
    */
-    this.localStore.stbCurrentPortfolioSubject.subscribe(
+    this.stbStore.currentPortfolioSubject.subscribe(
       data => {
         this.currentPortfolio = data
 

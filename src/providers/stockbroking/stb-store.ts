@@ -4,6 +4,8 @@ import 'rxjs/add/operator/map'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 import { IPortfolio } from '../../models/PortfolioInterface'
 import { Storage } from '@ionic/storage'
+import { StockbrokingProvider } from './stb-service';
+import { ITradeOrder } from '../../models/TradeOrderInterface';
 
 /**
  * Observable data service used to provide stockbroking data app wide
@@ -18,6 +20,7 @@ export class StbStore {
    */
   public portfoliosSubject = new BehaviorSubject<IPortfolio[]>([])
   public currentPortfolioSubject = new BehaviorSubject<any>({})
+  public tradeOrdersSubject = new BehaviorSubject<any>([])
 
   // The stockbroking portfolios owned by the user
   public portfolios: Array<IPortfolio> = []
@@ -37,18 +40,44 @@ export class StbStore {
   // The portfolio which is currently selected (defaults to the first portfolio)
   public currentPortfolio: IPortfolio
 
+  public tradeOrders: any
 
-  constructor(public http: Http) {
-    // Subscribe to and update the currentPortfolio property whenever a new currentPortfolio is selected
+
+  constructor(public http: Http,
+              public storage: Storage,
+              private stbService: StockbrokingProvider) {
+    // Subscribe to and update the currentPortfolio property whenever a new currentPortfolio is selected (unsure)
     this.currentPortfolioSubject.subscribe(
       data => {
         this.currentPortfolio = data
 
       }
     )
+    this.portfoliosSubject.subscribe(
+      data => {
+        this.portfolios = data
+      }
+    )
 
   }
 
+  /**
+   * Broadcast old values which are stored on the client end.
+   * This is used on reload to pick up the old data
+   */
+  broadcastOldValues() {
+
+    this.storage.get('stb-currentPortfolio').then((currentPortfolio) => {
+      this.currentPortfolio = currentPortfolio
+      this.currentPortfolioSubject.next(currentPortfolio)
+    })
+
+    this.storage.get('stb-portfolios').then((portfolios) => {
+      this.portfolios = portfolios
+      this.portfoliosSubject.next(portfolios)
+    })
+
+  }
 
   /**
    * Store the user's stockbroking data gotten after login
@@ -83,6 +112,11 @@ export class StbStore {
       this.portfoliosSubject.next(this.portfolios)
       this.currentPortfolioSubject.next(this.currentPortfolio)
 
+      // Store the data in the client side store
+      this.storage.set('stb-portfolios', this.portfolios)
+      this.storage.set('stb-currentPortfolio', this.currentPortfolio)
+
+
     }
   }
 
@@ -99,7 +133,24 @@ export class StbStore {
     }
 
     let currentPortfolio = this.portfolios[portfolioIndex]
+    this.currentPortfolio = currentPortfolio
     this.currentPortfolioSubject.next(currentPortfolio)
+  }
+
+  /**
+   * Get the user's trade orders and store it locally
+   */
+  getTradeOrders(userID: number, cacheStatus: number = 0) {
+    this.stbService.getTradeOrders(userID, cacheStatus).subscribe(
+      data => {
+        this.tradeOrdersSubject.next(data)
+        this.storage.set('stb-tradeOrders', data)
+      },
+      error => {
+        console.error('An error occured whilst getting trade orders')
+        console.error(error)
+      }
+    )
   }
 
 }

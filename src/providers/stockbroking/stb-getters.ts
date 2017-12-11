@@ -72,6 +72,7 @@ export class StbGetters {
   getCurrentPortfolioIndex(): number {
     let portfolios = this.stbStore.portfolios
     let currentPortfolio = this.stbStore.currentPortfolio
+    console.log(this.stbStore.portfolios, this.stbStore.currentPortfolio)
 
     let currentPortfolioIndex = portfolios.findIndex((portfolio) => {
       return portfolio.id === currentPortfolio.id

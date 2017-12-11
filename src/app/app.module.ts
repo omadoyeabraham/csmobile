@@ -20,6 +20,7 @@ import { StbStore } from '../providers/stockbroking/stb-store';
 import { StbGetters } from '../providers/stockbroking/stb-getters';
 import { UtilityServiceProvider } from '../providers/utility-service/utility-service';
 import { LocalStorageProvider } from '../providers/local-storage/local-storage';
+import { AuthProvider } from '../providers/auth/auth';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { LocalStorageProvider } from '../providers/local-storage/local-storage';
     StbStore,
     StbGetters,
     UtilityServiceProvider,
-    LocalStorageProvider
+    LocalStorageProvider,
+    AuthProvider
   ]
 })
 export class AppModule {}

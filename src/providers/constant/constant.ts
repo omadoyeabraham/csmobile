@@ -22,6 +22,8 @@ export class ConstantProvider {
 
 public baseURL = "https://restserver.cardinalstone.com/public/index.php/api/";
 public findCustomerByName = this.baseURL + 'findCustomerByName';
+public getTradeOrdersUrl = this.baseURL + 'findCustomerOrders'
+
 public loginLoadingMessage = "Loading Please Wait...";
 public toastMessagePasswordMismatch = "Username and Password do not match!";
 public toastMessageNetworkError = "Network error, please connect to a network!";

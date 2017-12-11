@@ -34,7 +34,8 @@ export class SwitchPortfolioComponent {
   // Expose the slides in the slider to the class for tracking and appropriate update
   @ViewChild(Slides) slides: Slides;
 
-  constructor(private stbStore: StbStore, private stbGetters: StbGetters) {
+  constructor(private stbStore: StbStore,
+              private stbGetters: StbGetters) {
 
     /**
      * Subscribe to the observable from the stbStore and populate this components instance variables
@@ -43,9 +44,6 @@ export class SwitchPortfolioComponent {
       data => {
         this.portfolios = data
         this.numberOfPortfolios = this.portfolios.length
-      },
-      error => {
-        console.error('Error occured while getting portfolios')
       }
     )
 
