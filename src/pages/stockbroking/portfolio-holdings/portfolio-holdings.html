@@ -16,11 +16,6 @@
     <ion-title>
       <span> Portfolio Holdings</span>
     </ion-title>
-
-    <ion-buttons end>
-      <span class="indexDetails">{{selectedPortfolioIndex}} of {{numberOfPortfolios}}</span>
-    </ion-buttons>
-
   </ion-navbar>
 </ion-header>
 
@@ -44,64 +39,90 @@
         <!-- Stock Holdings -->
         <div *ngSwitchCase="'stocks'">
           <ion-list class="mt10 holdings-list">
-            <ion-item class="">
-              <ion-grid *ngFor="let test of tests">
+            <!-- Display if stock holdings exist -->
+            <ion-item *ngIf="stockHoldings.length > 0" >
+              <ion-grid *ngFor="let stockHolding of stockHoldings">
                 <ion-row>
-                  <ion-col><strong>7UP</strong></ion-col>
+                  <ion-col><strong>{{ stockHolding.securityName }}</strong></ion-col>
                   <ion-col class="font-size-12 align-right">
-                    <!-- Gain/Loss: <span class="font-red">&#8358;(20.92) (10.84%)</span> -->
-                     Gain/Loss: <span class="font-red">(10.84%)</span>
+                     Gain/Loss: <color-format [data]="stockHolding.percentGain" [showCurrency]="true"></color-format>
                   </ion-col>
                 </ion-row>
                 <ion-row>
-                  <ion-col class="font-size-12">WAC: &#8358;2.50</ion-col>
-                  <ion-col class="font-size-12 align-right">Qty: 2</ion-col>
+                  <ion-col class="font-size-12">WAC: &#8358;{{ stockHolding.costBasis | number:'1.2-2' }}</ion-col>
+                  <ion-col class="font-size-12 align-right">
+                    Qty: {{ stockHolding.quantityHeld | number:'1.0-0' }}</ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col class="font-size-12">
-                    Cur Price: &#8358;86.07 <span class="font-red">(4.37%)</span>
+                    Cur Price: {{ stockHolding.marketPrice }} <color-format [data]="10.00" [showCurrency]="true"></color-format>
                   </ion-col>
-                  <ion-col class="font-size-12 align-right">Val: &#8358;172.14</ion-col>
+                  <ion-col class="font-size-12 align-right">
+                    Val: &#8358;{{ stockHolding.valuation | number:'1.2-2' }}</ion-col>
                 </ion-row>
               </ion-grid>
             </ion-item>
+
+            <!-- Display if there are no stock holdings in the account -->
+              <ion-item *ngIf="stockHoldings.length <= 0" >
+                <ion-grid>
+                  <ion-row class="mt40">
+                    <ion-col text-center>No stock holdings in this portfolio</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
           </ion-list>
         </div>
 
         <!-- Bond Holdings -->
         <div *ngSwitchCase="'bonds'">
           <ion-list class="mt10 holdings-list holdings-bonds">
-            <ion-item class="">
-              <ion-grid *ngFor="let test of tests">
+
+            <!-- Bond Holding Exist -->
+            <ion-item *ngIf="bondHoldings.length > 0">
+              <ion-grid *ngFor="let bondHolding of bondHoldings">
                 <ion-row>
                   <ion-col>
                     Security
                   </ion-col>
                   <ion-col class="align-right">
-                   FGS2019S1
+                   {{ bondHolding.securityName }}
                   </ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col class="">Units</ion-col>
-                  <ion-col class=" align-right">25</ion-col>
+                  <ion-col class=" align-right">{{ bondHolding.quantityHeld }}</ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col class="">
                     Accrued Coupon
                   </ion-col>
-                  <ion-col class="align-right">Val: &#8358;172.14</ion-col>
+                  <ion-col class="align-right">&#8358;{{ bondHolding.accruedCoupon | number:'1.2-2' }}</ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col class="">
                     Face Value
                   </ion-col>
-                  <ion-col class="align-right">Val: &#8358;17,982.14</ion-col>
+                  <ion-col class="align-right">&#8358;{{ bondHolding.faceValue | number:'1.2-2' }}</ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col class="">
                     Maturity Date
                   </ion-col>
-                  <ion-col class="align-right">22-Mar-2019</ion-col>
+                  <ion-col class="align-right">
+                    {{ bondHolding.maturityDate | date:'mediumDate' }}
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+
+            <!-- No Bond Holdings -->
+            <ion-item *ngIf="bondHoldings.length <= 0">
+              <ion-grid>
+                <ion-row class="mt40">
+                  <ion-col text-center class="font-size-16">
+                    No bond holdings in this portfolio
+                  </ion-col>
                 </ion-row>
               </ion-grid>
             </ion-item>

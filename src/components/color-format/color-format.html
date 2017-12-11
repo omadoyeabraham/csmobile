@@ -1,0 +1,12 @@
+<!-- Generated template for the ColorFormatComponent component -->
+<span *ngIf="data > 0" class="text-green">
+  <span *ngIf="showCurrency">&#8358;</span>{{ data | number:'1.2-2' }}
+</span>
+
+<span *ngIf="data < 0" class="text-red">
+  <span *ngIf="showCurrency">&#8358;</span>({{ absoluteValue | number:'1.2-2' }})
+</span>
+
+<span *ngIf="data === 0" class="text-blue">
+  <span *ngIf="showCurrency">&#8358;</span>{{ data | number:'1.2-2' }}
+</span>

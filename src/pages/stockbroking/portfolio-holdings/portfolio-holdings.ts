@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { StbStore } from '../../../providers/stockbroking/stb-store';
+import { StbGetters } from '../../../providers/stockbroking/stb-getters';
+import { IPortfolio } from '../../../models/PortfolioInterface';
+import { IPortfolioHolding } from '../../../models/PortfolioHoldingInterface';
 
 /**
  * Generated class for the PortfolioHoldingsPage page.
@@ -15,29 +19,41 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PortfolioHoldingsPage {
 
-  selectedPortfolioIndex: number = 1;
-  numberOfPortfolios: number = 3;
-
   // The initial tab of holdings shown
   holdingType: string = "stocks";
 
   tests = [1,2,3,4,5,6,7];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  /**
+   * Class instance variables
+   */
+  currentPortfolio: IPortfolio
+  stockHoldings: IPortfolioHolding[]
+  bondHoldings: IPortfolioHolding[]
+
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public stbStore: StbStore,
+              public stbGetters: StbGetters) {
+
+    this.stbStore.currentPortfolioSubject.subscribe(
+      data => {
+        this.currentPortfolio = data
+        this.stockHoldings = this.stbGetters.getCurrentPortfolioStockHoldings()
+        this.bondHoldings = this.stbGetters.getCurrentPortfolioBondHoldings()
+      }
+    )
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PortfolioHoldingsPage');
+    this.stbStore.currentPortfolioSubject.subscribe(
+      data => {
+        this.currentPortfolio = data
+        this.stockHoldings = this.stbGetters.getCurrentPortfolioStockHoldings()
+        this.bondHoldings = this.stbGetters.getCurrentPortfolioBondHoldings()
+      }
+    )
   }
 
-  /**
-   * Handle the event emitted by the portfolio switching component when the user changes their portfolio
-   *
-   * @param data
-   */
-  onPortfolioChange(data) {
-    this.selectedPortfolioIndex = data.currentPortfolio
-    this.numberOfPortfolios = data.numberOfPortfolios
-  }
 
 }

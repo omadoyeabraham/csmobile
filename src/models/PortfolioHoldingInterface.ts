@@ -18,11 +18,25 @@ export interface IPortfolioHolding {
   securityType: string
   valuation: string
   valueDate: string
+  maturityDate?: any
 
+  /**
+   * Optional paramaters calculated by the app and used to plot charts
+   */
   gainOrLoss?: number
   percentageOfPortfolio?: number
   percentageGainOrLoss?: number
   totalCost?: number
   lost?: boolean
   gained?: boolean
+
+  /**
+   * Optional parameters calculated by the app (only for bond holdings)
+   */
+  id?: number
+  dirtyPrice?: string
+  faceValue?: number
+  accruedCoupon?: number
+  nextCouponDate?: any
+  lastCouponDate?: any
 }

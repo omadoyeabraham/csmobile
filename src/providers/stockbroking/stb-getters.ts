@@ -6,6 +6,7 @@ import { IPortfolio } from '../../models/PortfolioInterface';
 import { UtilityServiceProvider } from '../utility-service/utility-service';
 import { IPortfolioHolding } from '../../models/PortfolioHoldingInterface';
 import { ChartsProvider } from '../charts/charts';
+import * as moment from 'moment'
 
 /*
  * This getters service is used by the stb store to compute various needed values from the data returned by our API call. I extracted it to a seperate service to aid developer experience and keep the codebase as DRY as possible
@@ -151,6 +152,48 @@ export class StbGetters {
     })
 
     return currentPortfolioStockHoldings
+  }
+
+  /**
+   * Get the bond portfolio holdings of the currently selected portfolio (bonds)
+   *
+   * @returns {IPortfolioHolding[]}
+   * @memberof StbGetters
+   */
+  getCurrentPortfolioBondHoldings(): IPortfolioHolding[] {
+    let currentPortfolioHoldings = this.getCurrentPortfolioHoldings()
+
+    if (currentPortfolioHoldings.length === 0) {
+      return []
+    }
+
+    const bondPortfolioHoldings = currentPortfolioHoldings.filter((portfolioHolding) => {
+      return (portfolioHolding.securityType === 'BOND')
+    })
+
+    // Data initialization
+    let faceValue = 0
+    let accruedCoupon = 0
+    let currentPortfolioBondHoldings = []
+    // let bond = {}
+
+    // Loop through the bond holding, and perform the necessary calculations
+    bondPortfolioHoldings.forEach((bondHolding, index) => {
+      // faceValue = parseFloat(bondHolding.quantityHeld) * parseFloat(bondHolding.parValue)
+      faceValue = parseFloat(bondHolding.marketValue)
+      accruedCoupon = (parseFloat(bondHolding.dirtyPrice) - parseFloat(bondHolding.marketPrice)) * parseFloat(bondHolding.quantityHeld)
+
+      bondHolding.id = index
+      bondHolding.faceValue = faceValue
+      bondHolding.accruedCoupon = accruedCoupon
+      let nextCouponDate = moment(bondHolding.lastCouponDate).add(90, 'days')
+      bondHolding.nextCouponDate = nextCouponDate
+
+      currentPortfolioBondHoldings.push(bondHolding)
+    })
+
+    return currentPortfolioBondHoldings
+
   }
 
   /**

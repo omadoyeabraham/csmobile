@@ -40,11 +40,11 @@
       </ion-item>
       <ion-item>
         Gain/Loss
-        <span item-end class="font-green">&#8358;{{ currentPortfolio.gainOrLoss | number:'1.2-2' }}</span>
+        <span item-end class="font-green"><color-format [data]="currentPortfolio.gainOrLoss" [showCurrency]="true"></color-format></span>
       </ion-item>
       <ion-item>
         Gain/Loss (%)
-        <span item-end class="font-green">{{ currentPortfolio.percGain | number:'1.2-2' }}</span>
+        <span item-end class="font-green"><color-format [data]="currentPortfolio.percGain" [showCurrency]="false"></color-format></span>
       </ion-item>
       <ion-item></ion-item>
     </ion-item-group>
