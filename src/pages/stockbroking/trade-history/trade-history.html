@@ -18,4 +18,61 @@
 
 <ion-content no-padding>
   <switch-portfolio></switch-portfolio>
+
+  <!-- Outstanding and All Orders -->
+  <div no-padding>
+    <ion-segment [(ngModel)]="tradeOrderStatus" class="mt10">
+      <ion-segment-button value="outstanding">
+        Outstanding
+      </ion-segment-button>
+      <ion-segment-button value="all">
+        All
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  {{tradeOrdersByDate | json}}
+
+  <div class="row mt20" *ngFor="let tradeDate of tradeOrdersByDate;">
+    <ion-item-divider color="light" class="font-size-14 bg-light-blue">NOV 4th 2017 </ion-item-divider>
+    <ion-grid class="tradeOrderWrapper" *ngFor="let tradeOrder of tradeDate">
+      <div>
+        <ion-row>
+          <ion-col class="pl15">{{tradeOrder.orderType}}: {{tradeOrder.instrument}}</ion-col>
+          <ion-col text-right>Qty: {{tradeOrder.quantityRequested}}</ion-col>
+        </ion-row>
+      </div>
+
+      <!-- TradeOrder details -->
+      <div class="details">
+        <ion-row>
+          <ion-col class="pl15">Quantity Requested</ion-col>
+          <ion-col text-right>10</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="pl15">Quantity Executed</ion-col>
+          <ion-col text-right>8</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="pl15">Price Type</ion-col>
+          <ion-col text-right>8</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="pl15">Limit Price</ion-col>
+          <ion-col text-right>8</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="pl15">Order Date</ion-col>
+          <ion-col text-right>8</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="pl15">Status</ion-col>
+          <ion-col text-right>8</ion-col>
+        </ion-row>
+      </div>
+    </ion-grid>
+  </div>
+
+
+
+
 </ion-content>

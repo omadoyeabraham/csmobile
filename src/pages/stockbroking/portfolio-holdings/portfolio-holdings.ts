@@ -22,8 +22,6 @@ export class PortfolioHoldingsPage {
   // The initial tab of holdings shown
   holdingType: string = "stocks";
 
-  tests = [1,2,3,4,5,6,7];
-
   /**
    * Class instance variables
    */

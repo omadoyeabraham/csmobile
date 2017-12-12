@@ -7,6 +7,9 @@ import { UtilityServiceProvider } from '../utility-service/utility-service';
 import { IPortfolioHolding } from '../../models/PortfolioHoldingInterface';
 import { ChartsProvider } from '../charts/charts';
 import * as moment from 'moment'
+import { StockbrokingProvider } from './stb-service';
+import { Storage } from '@ionic/storage';
+import { ITradeOrder } from '../../models/TradeOrderInterface';
 
 /*
  * This getters service is used by the stb store to compute various needed values from the data returned by our API call. I extracted it to a seperate service to aid developer experience and keep the codebase as DRY as possible
@@ -20,6 +23,8 @@ export class StbGetters {
 
   constructor(public http: Http,
               private stbStore: StbStore,
+              private stbService: StockbrokingProvider,
+              private storage: Storage,
               private utilityService: UtilityServiceProvider,
               private chartsService: ChartsProvider) {
     /**
@@ -72,7 +77,6 @@ export class StbGetters {
   getCurrentPortfolioIndex(): number {
     let portfolios = this.stbStore.portfolios
     let currentPortfolio = this.stbStore.currentPortfolio
-    console.log(this.stbStore.portfolios, this.stbStore.currentPortfolio)
 
     let currentPortfolioIndex = portfolios.findIndex((portfolio) => {
       return portfolio.id === currentPortfolio.id
@@ -286,6 +290,37 @@ export class StbGetters {
     const chartData = this.chartsService.getBarChart(this.getCurrentPortfolioStockData())
 
     return chartData
+  }
+
+  /**
+   * Get the user's trade orders and store it locally
+   */
+  getTradeOrders(userID: number, cacheStatus: number = 0) {
+    this.stbService.getTradeOrders(userID, cacheStatus).subscribe(
+      (data: any) => {
+        if(data.item !== undefined) {
+          let tradeOrders: ITradeOrder[] = data.item
+
+          tradeOrders.forEach((tradeOrder: ITradeOrder) => {
+            tradeOrder.canBeCancelled = this.stbService.determineIfTradeOrderCanBeCancelled(tradeOrder)
+            tradeOrder.isBooked = this.stbService.determineIfTradeOrderIsBooked(tradeOrder)
+            tradeOrder.cspOrderStatus = this.stbService.getTradeOrderCspStatus(tradeOrder)
+          })
+
+          this.stbStore.tradeOrdersSubject.next(tradeOrders)
+          this.storage.set('stb-tradeOrders', tradeOrders)
+
+          let groupedTradeOrders = this.stbService.groupTradeOrdersByDate(tradeOrders)
+          this.stbStore.tradeOrdersGroupedByDateSubject.next(groupedTradeOrders)
+          this.storage.set('stb-tradeOrdersGroupedByDate', groupedTradeOrders)
+        }
+
+      },
+      error => {
+        console.error('An error occured whilst getting trade orders')
+        console.error(error)
+      }
+    )
   }
 
 

@@ -14,22 +14,24 @@ import 'rxjs/add/operator/map';
   object that does not need to be instantiated for a
   better performance - Olaleye Osunsanya
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
 */
 @Injectable()
 export class ConstantProvider {
 
-public baseURL = "https://restserver.cardinalstone.com/public/index.php/api/";
-public findCustomerByName = this.baseURL + 'findCustomerByName';
-public getTradeOrdersUrl = this.baseURL + 'findCustomerOrders'
+  /**
+   * URL's for API endpoints
+   */
+  public baseURL = "https://restserver.cardinalstone.com/public/index.php/api/";
 
-public loginLoadingMessage = "Loading Please Wait...";
-public toastMessagePasswordMismatch = "Username and Password do not match!";
-public toastMessageNetworkError = "Network error, please connect to a network!";
-public toastMessageGeneral = "Something went wrong, please try again later!";
-public toastDuration = 5000;
-public toastPosition = "top";
+  public findCustomerByNameUrl = this.baseURL + 'findCustomerByName';
+  public getTradeOrdersUrl = this.baseURL + 'findCustomerOrders'
+
+  public loginLoadingMessage = "Loading Please Wait...";
+  public toastMessagePasswordMismatch = "Username and Password do not match!";
+  public toastMessageNetworkError = "Network error, please connect to a network!";
+  public toastMessageGeneral = "Something went wrong, please try again later!";
+  public toastDuration = 5000;
+  public toastPosition = "top";
 
   constructor(
     public http: Http,

@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { ConstantProvider } from '../constant/constant';
+import { Observable } from 'rxjs/Observable';
+import { Storage } from '@ionic/storage/es2015/storage';
 
 /**
  * Authentication service which provides different authentication related facilities to the csmobile application.
@@ -10,7 +13,9 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AuthProvider {
 
-  constructor(public http: Http) {
+  constructor(public http: Http,
+              public constants: ConstantProvider,
+              public storage: Storage) {
   }
 
   /**
@@ -19,7 +24,14 @@ export class AuthProvider {
    * @param username
    * @param password
    */
-  login(username: string, password: string) :void {
+  login(username: string, password: string) :Observable<any> {
+    let credentials = {
+      username: username,
+      password: password
+    }
+
+    return this.http.post(this.constants.findCustomerByNameUrl, credentials)
+                          .map((response) => response.json())
 
   }
 
@@ -37,7 +49,7 @@ export class AuthProvider {
    * @return string
    */
   getAuthorizationToken() {
-
+    return this.storage.get('token')
   }
 
 }

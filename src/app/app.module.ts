@@ -5,10 +5,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage'
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { LoginProvider } from '../providers/login/login';
 import { ConstantProvider } from '../providers/constant/constant';
 import { CustomerProvider } from '../providers/customer/customer';
 import { CashAccountProvider } from '../providers/cash-account/cash-account';
@@ -21,6 +21,8 @@ import { StbGetters } from '../providers/stockbroking/stb-getters';
 import { UtilityServiceProvider } from '../providers/utility-service/utility-service';
 import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 import { AuthProvider } from '../providers/auth/auth';
+import { AuthInterceptor } from '../interceptors/AuthInterceptor';
+
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { AuthProvider } from '../providers/auth/auth';
   imports: [
     BrowserModule,
     HttpModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot({
       name: 'csmobile-client-store'
@@ -44,7 +47,6 @@ import { AuthProvider } from '../providers/auth/auth';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    LoginProvider,
     ConstantProvider,
     CustomerProvider,
     CashAccountProvider,
@@ -56,7 +58,12 @@ import { AuthProvider } from '../providers/auth/auth';
     StbGetters,
     UtilityServiceProvider,
     LocalStorageProvider,
-    AuthProvider
+    AuthProvider,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ]
 })
 export class AppModule {}

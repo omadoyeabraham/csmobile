@@ -21,6 +21,7 @@ export class StbStore {
   public portfoliosSubject = new BehaviorSubject<IPortfolio[]>([])
   public currentPortfolioSubject = new BehaviorSubject<any>({})
   public tradeOrdersSubject = new BehaviorSubject<any>([])
+  public tradeOrdersGroupedByDateSubject = new BehaviorSubject<any>([])
 
   // The stockbroking portfolios owned by the user
   public portfolios: Array<IPortfolio> = []
@@ -40,7 +41,8 @@ export class StbStore {
   // The portfolio which is currently selected (defaults to the first portfolio)
   public currentPortfolio: IPortfolio
 
-  public tradeOrders: any
+  public tradeOrders: ITradeOrder[]
+  public groupedTradeOrders: Array<any>
 
 
   constructor(public http: Http,
@@ -75,6 +77,16 @@ export class StbStore {
     this.storage.get('stb-portfolios').then((portfolios) => {
       this.portfolios = portfolios
       this.portfoliosSubject.next(portfolios)
+    })
+
+    this.storage.get('stb-tradeOrders').then((tradeOrders) => {
+      this.tradeOrders = tradeOrders
+      this.tradeOrdersSubject.next(tradeOrders)
+    })
+
+    this.storage.get('stb-tradeOrdersGroupedByDate').then((groupedTradeOrders) => {
+      this.groupedTradeOrders = groupedTradeOrders
+      this.tradeOrdersGroupedByDateSubject.next(groupedTradeOrders)
     })
 
   }
@@ -137,20 +149,6 @@ export class StbStore {
     this.currentPortfolioSubject.next(currentPortfolio)
   }
 
-  /**
-   * Get the user's trade orders and store it locally
-   */
-  getTradeOrders(userID: number, cacheStatus: number = 0) {
-    this.stbService.getTradeOrders(userID, cacheStatus).subscribe(
-      data => {
-        this.tradeOrdersSubject.next(data)
-        this.storage.set('stb-tradeOrders', data)
-      },
-      error => {
-        console.error('An error occured whilst getting trade orders')
-        console.error(error)
-      }
-    )
-  }
+
 
 }

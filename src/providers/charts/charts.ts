@@ -77,7 +77,6 @@ export class ChartsProvider {
    */
   getBarChart(chartData: Array<any> = []) {
     // Get the sector data for the portofolio and initialize variables
-    console.log(chartData)
     let dataSet = chartData
     let graphData = [{
       data: []

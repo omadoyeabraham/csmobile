@@ -34,5 +34,9 @@ export interface ITradeOrder {
   "securityLabel": string,
   "securityName": string,
   "statusDate": string,
-  "systemGenerated": boolean
+  "systemGenerated": boolean,
+
+  "canBeCancelled" ?: boolean,
+  "isBooked"?: boolean,
+  "cspOrderStatus"?: string,
 }
