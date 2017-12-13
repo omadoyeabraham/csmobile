@@ -53,7 +53,7 @@ export class StbGetters {
    * Returns the total value of the current selected portfolio
    */
   getCurrentPortfolioTotalValue(): number {
-    let currentPortfolio = this.stbStore.currentPortfolio
+    let currentPortfolio = this.stbStore.currentPortfolioSubject.getValue()
 
     // Return 0 if the current portfolio is empty
     if (currentPortfolio === {}) {
@@ -75,8 +75,8 @@ export class StbGetters {
    * @memberof StbGetters
    */
   getCurrentPortfolioIndex(): number {
-    let portfolios = this.stbStore.portfolios
-    let currentPortfolio = this.stbStore.currentPortfolio
+    let portfolios = this.stbStore.portfoliosSubject.getValue()
+    let currentPortfolio = this.stbStore.currentPortfolioSubject.getValue()
 
     let currentPortfolioIndex = portfolios.findIndex((portfolio) => {
       return portfolio.id === currentPortfolio.id
@@ -132,7 +132,6 @@ export class StbGetters {
     let gainOrLoss = 0
     let percentageGainOrLoss = 0
     let totalCost = 0
-    //let currentStockValue = 0
     let totalPortfolioValue = this.getCurrentPortfolioTotalValue()
     let currentPortfolioStockHoldings = []
 
@@ -180,11 +179,9 @@ export class StbGetters {
     let faceValue = 0
     let accruedCoupon = 0
     let currentPortfolioBondHoldings = []
-    // let bond = {}
 
     // Loop through the bond holding, and perform the necessary calculations
     bondPortfolioHoldings.forEach((bondHolding, index) => {
-      // faceValue = parseFloat(bondHolding.quantityHeld) * parseFloat(bondHolding.parValue)
       faceValue = parseFloat(bondHolding.marketValue)
       accruedCoupon = (parseFloat(bondHolding.dirtyPrice) - parseFloat(bondHolding.marketPrice)) * parseFloat(bondHolding.quantityHeld)
 
@@ -292,36 +289,6 @@ export class StbGetters {
     return chartData
   }
 
-  /**
-   * Get the user's trade orders and store it locally
-   */
-  getTradeOrders(userID: number, cacheStatus: number = 0) {
-    this.stbService.getTradeOrders(userID, cacheStatus).subscribe(
-      (data: any) => {
-        if(data.item !== undefined) {
-          let tradeOrders: ITradeOrder[] = data.item
-
-          tradeOrders.forEach((tradeOrder: ITradeOrder) => {
-            tradeOrder.canBeCancelled = this.stbService.determineIfTradeOrderCanBeCancelled(tradeOrder)
-            tradeOrder.isBooked = this.stbService.determineIfTradeOrderIsBooked(tradeOrder)
-            tradeOrder.cspOrderStatus = this.stbService.getTradeOrderCspStatus(tradeOrder)
-          })
-
-          this.stbStore.tradeOrdersSubject.next(tradeOrders)
-          this.storage.set('stb-tradeOrders', tradeOrders)
-
-          let groupedTradeOrders = this.stbService.groupTradeOrdersByDate(tradeOrders)
-          this.stbStore.tradeOrdersGroupedByDateSubject.next(groupedTradeOrders)
-          this.storage.set('stb-tradeOrdersGroupedByDate', groupedTradeOrders)
-        }
-
-      },
-      error => {
-        console.error('An error occured whilst getting trade orders')
-        console.error(error)
-      }
-    )
-  }
 
 
 }

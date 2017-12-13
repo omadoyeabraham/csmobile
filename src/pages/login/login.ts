@@ -11,8 +11,6 @@ import { StbGetters } from '../../providers/stockbroking/stb-getters';
 /**
  * Generated class for the LoginPage page.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
  */
 
 @IonicPage()
@@ -87,7 +85,7 @@ export class LoginPage {
       /**
        * Make asynchronous calls to get various data items that will be required later
        */
-      this.stbGetters.getTradeOrders(data.customer.id, 0)
+      this.stbStore.storeTradeOrders(data.customer.id, 0)
 
       // Navigate to the welcome page
       this.navController.push('WelcomePage', {customerData: data});

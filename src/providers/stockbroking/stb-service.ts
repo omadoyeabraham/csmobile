@@ -82,20 +82,34 @@ export class StockbrokingProvider {
    */
   groupTradeOrdersByDate(tradeOrders: ITradeOrder[]) {
     let groupedTradeOrders = []
+    let tradeOrderDates = []
+    let count = 0
 
     tradeOrders.forEach((tradeOrder) => {
       let tradeOrderDate = tradeOrder.orderDate
       tradeOrderDate = moment(tradeOrderDate).format('ddd MMM DD YYYY')
 
-      if(groupedTradeOrders[tradeOrderDate]) {
-        groupedTradeOrders[tradeOrderDate].push(tradeOrder)
+      // Check if an order on the current date has already been sorted
+      if(tradeOrderDates[tradeOrderDate]) {
+        groupedTradeOrders[tradeOrderDates[tradeOrderDate]].push(tradeOrder)
+
       } else {
-        groupedTradeOrders[tradeOrderDate] = []
-        groupedTradeOrders[tradeOrderDate].push(tradeOrder)
+        // Set so we can track the array index where tradeOrders of a particular date are stored
+        tradeOrderDates[tradeOrderDate] = count
+
+        // Set so we have access to the date for a particular group of trade orders
+        groupedTradeOrders[count] = [{
+          date: tradeOrderDate
+        }]
+
+        groupedTradeOrders[count].push(tradeOrder)
+
+        // Increment count for when a group of tradeOrders are created
+        count = count + 1
       }
 
     })
-    //console.log(groupedTradeOrders)
+
     return groupedTradeOrders
   }
 

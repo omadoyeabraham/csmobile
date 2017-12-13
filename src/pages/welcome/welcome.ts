@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { StbStore } from '../../providers/stockbroking/stb-store';
 
 /**
  * Generated class for the WelcomePage page.

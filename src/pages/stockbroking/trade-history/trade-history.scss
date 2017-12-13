@@ -4,8 +4,27 @@ page-trade-history {
     background: #EFEFEF;
   }
 
-  .details {
-    display: none
+  .tradeOrderWrapper{
+    .details {
+      display: none
+    }
+  }
+
+  .tradeOrderWrapper.showDetails{
+    .headers {
+      ion-row {
+        font-weight: bold
+      }
+    }
+    .details {
+      display: block
+    }
+  }
+
+  .tradeOrderGroup {
+      ion-grid:first-of-type {
+        display: none;
+      }
   }
 
   ion-item-divider {

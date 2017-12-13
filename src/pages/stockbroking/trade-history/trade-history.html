@@ -30,15 +30,15 @@
       </ion-segment-button>
     </ion-segment>
   </div>
-  {{tradeOrdersByDate | json}}
 
-  <div class="row mt20" *ngFor="let tradeDate of tradeOrdersByDate;">
-    <ion-item-divider color="light" class="font-size-14 bg-light-blue">NOV 4th 2017 </ion-item-divider>
-    <ion-grid class="tradeOrderWrapper" *ngFor="let tradeOrder of tradeDate">
-      <div>
+
+  <div class="row mt20 tradeOrderGroup" *ngFor="let tradeOrderDate of stbStore.outstandingTradeOrdersGroupedByDate | async">
+    <ion-item-divider color="light" class="font-size-14 bg-light-blue">{{tradeOrderDate[0].date}} </ion-item-divider>
+    <ion-grid class="tradeOrderWrapper" *ngFor="let tradeOrder of tradeOrderDate" (click)="toggleTradeOrderDisplay($event)">
+      <div class="headers">
         <ion-row>
           <ion-col class="pl15">{{tradeOrder.orderType}}: {{tradeOrder.instrument}}</ion-col>
-          <ion-col text-right>Qty: {{tradeOrder.quantityRequested}}</ion-col>
+          <ion-col text-right>Qty: {{tradeOrder.quantityFilled| number:'1.0-0'}}</ion-col>
         </ion-row>
       </div>
 
@@ -46,27 +46,27 @@
       <div class="details">
         <ion-row>
           <ion-col class="pl15">Quantity Requested</ion-col>
-          <ion-col text-right>10</ion-col>
+          <ion-col text-right>{{tradeOrder.quantityRequested | number:'1.0-0'}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col class="pl15">Quantity Executed</ion-col>
-          <ion-col text-right>8</ion-col>
+          <ion-col text-right>{{tradeOrder.quantityFilled | number:'1.0-0'}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col class="pl15">Price Type</ion-col>
-          <ion-col text-right>8</ion-col>
+          <ion-col text-right>{{tradeOrder.priceType}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col class="pl15">Limit Price</ion-col>
-          <ion-col text-right>8</ion-col>
+          <ion-col text-right>&#8358;{{tradeOrder.limitPrice}}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col class="pl15">Order Date</ion-col>
-          <ion-col text-right>8</ion-col>
+          <ion-col text-right>{{tradeOrder.orderDate | date:'mediumDate' }}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col class="pl15">Status</ion-col>
-          <ion-col text-right>8</ion-col>
+          <ion-col text-right>{{tradeOrder.orderStatus}}</ion-col>
         </ion-row>
       </div>
     </ion-grid>

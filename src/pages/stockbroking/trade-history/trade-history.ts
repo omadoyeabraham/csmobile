@@ -2,13 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ITradeOrder } from '../../../models/TradeOrderInterface';
 import { StbStore } from '../../../providers/stockbroking/stb-store';
-import { StockbrokingProvider } from '../../../providers/stockbroking/stb-service';
 
 /**
  * Generated class for the TradeHistoryPage page.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
  */
 
 @IonicPage()
@@ -24,49 +21,38 @@ export class TradeHistoryPage {
    * Class Instance Variables
    *
    */
-  tradeOrders: ITradeOrder[]
-  tradeOrdersByDate: Array<any>
-
-  items = [1,2,3,4,5]
+  private lastToggledDiv: any
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private stbStore: StbStore) {
-
-    // this.stbStore.tradeOrdersSubject.subscribe(
-    //   data => {
-    //     this.tradeOrders = data
-    //   }
-    // )
-
-    // this.stbStore.tradeOrdersGroupedByDateSubject.subscribe(
-    //   data => {
-    //     this.tradeOrdersByDate = data
-    //     console.log(this.tradeOrdersByDate)
-    //   }
-    // )
   }
 
   ionViewDidLoad() {
-    this.stbStore.tradeOrdersSubject.subscribe(
-      data => {
-        this.tradeOrders = data
-      }
-    )
-
-    this.stbStore.tradeOrdersGroupedByDateSubject.subscribe(
-      data => {
-        this.tradeOrdersByDate = data
-        console.log(this.tradeOrdersByDate)
-      }
-    )
   }
 
-  ngOnChanges(changes) {
-    console.log(changes)
-  }
+  /**
+   * Used to toggle the visibility of a TradeOrder's details when it is clicked on
+   */
+  toggleTradeOrderDisplay($event) {
+    let tradeOrderDiv = $event.srcElement
+    tradeOrderDiv = tradeOrderDiv.parentNode.parentNode.parentNode
 
-  toggleTradeOrder(i, j) {
+    // A div has been clicked on
+    if (this.lastToggledDiv) {
+
+      if(this.lastToggledDiv === tradeOrderDiv){
+        this.lastToggledDiv.classList.toggle('showDetails')
+      }else {
+        this.lastToggledDiv.classList.remove('showDetails')
+        tradeOrderDiv.classList.toggle('showDetails')
+      }
+    } else {
+      // No Div previously clicked on
+      tradeOrderDiv.classList.toggle('showDetails')
+    }
+
+    this.lastToggledDiv = tradeOrderDiv
 
   }
 
