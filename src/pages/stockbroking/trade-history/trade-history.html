@@ -61,7 +61,8 @@
               </ion-row>
               <ion-row>
                 <ion-col class="pl15">Limit Price</ion-col>
-                <ion-col text-right>&#8358;{{tradeOrder.limitPrice}}</ion-col>
+                <ion-col text-right *ngIf="tradeOrder.priceType==='LIMIT'">&#8358;{{tradeOrder.limitPrice}}</ion-col>
+                <ion-col text-right *ngIf="tradeOrder.priceType==='MARKET'">---</ion-col>
               </ion-row>
               <ion-row>
                 <ion-col class="pl15">Order Date</ion-col>
@@ -75,13 +76,12 @@
           </ion-grid>
         </div>
 
-        <div *ngIf="outstandingTradeOrders">
+        <div *ngIf="outstandingTradeOrders?.length <= 0">
           <!-- Display if there are no trade orders in the account -->
           <ion-item>
             <ion-grid>
-              <ion-row class="mt40">
-                {{(outstandingTradeOrders | json).length}}
-                <ion-col text-center>No outstanding orders in this portfolio</ion-col>
+              <ion-row class="mt40 mb40">
+                <ion-col text-center><i>No outstanding orders in this portfolio</i></ion-col>
               </ion-row>
             </ion-grid>
           </ion-item>
@@ -116,7 +116,8 @@
                 </ion-row>
                 <ion-row>
                   <ion-col class="pl15">Limit Price</ion-col>
-                  <ion-col text-right>&#8358;{{tradeOrder.limitPrice}}</ion-col>
+                  <ion-col text-right *ngIf="tradeOrder.priceType==='LIMIT'">&#8358;{{tradeOrder.limitPrice}}</ion-col>
+                  <ion-col text-right *ngIf="tradeOrder.priceType==='MARKET'">---</ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col class="pl15">Order Date</ion-col>
@@ -129,6 +130,19 @@
               </div>
             </ion-grid>
           </div>
+
+            <div *ngIf="tradeOrders?.length <= 0">
+              <!-- Display if there are no trade orders in the account -->
+              <ion-item>
+                <ion-grid>
+                  <ion-row class="mt40 mb40">
+                    <ion-col text-center>
+                      <i>No orders in this portfolio</i>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+            </div>
     </div>
 
   </div>
