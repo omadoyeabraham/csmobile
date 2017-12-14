@@ -289,6 +289,48 @@ export class StbGetters {
     return chartData
   }
 
+  /**
+   * Get tradeOrders for the currently selected portfolio
+   */
+  getCurrentPortfolioTradeOrders() {
+    let currentPortfolio = this.stbStore.currentPortfolioSubject.getValue()
+    let currentPortfolioName = currentPortfolio.name
+
+    let tradeOrders = this.stbStore.tradeOrdersSubject.getValue()
+
+    let currentPortfolioTradeOrders = tradeOrders.filter((tradeOrder: ITradeOrder) => {
+      return tradeOrder.portfolioName === currentPortfolioName
+    })
+
+    return currentPortfolioTradeOrders
+  }
+
+  /**
+   * Get the tradeOrders for the currently selected portfolio grouped by date
+   */
+  getCurrentPortfolioTradeOrdersGroupedByDate() {
+    return this.stbService.groupTradeOrdersByDate(this.getCurrentPortfolioTradeOrders())
+  }
+
+  /**
+   * Get tradeOrders for the currently selected portfolio
+   */
+  getCurrentPortfolioOutstandingTradeOrders() {
+    let currentPortfolioOutstandingTradeOrders = this.getCurrentPortfolioTradeOrders().filter((tradeOrder) => {
+      return (tradeOrder.cspOrderStatus === 'PENDING') || (tradeOrder.cspOrderStatus === 'EXECUTING') || (tradeOrder.fixOrderStatus === 'PARTIALLY_FILLED')
+    })
+
+    return currentPortfolioOutstandingTradeOrders
+  }
+
+  /**
+   * Get the outstanding tradeOrders for the currently selected portfolio grouped by date
+   */
+  getCurrentPortfolioOutstandingTradeOrdersGroupedByDate() {
+    return this.stbService.groupTradeOrdersByDate(this.getCurrentPortfolioOutstandingTradeOrders())
+  }
+
+
 
 
 }

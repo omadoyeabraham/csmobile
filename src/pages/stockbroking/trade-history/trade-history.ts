@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ITradeOrder } from '../../../models/TradeOrderInterface';
 import { StbStore } from '../../../providers/stockbroking/stb-store';
+import { StbGetters } from '../../../providers/stockbroking/stb-getters';
 
 /**
  * Generated class for the TradeHistoryPage page.
@@ -22,13 +23,23 @@ export class TradeHistoryPage {
    *
    */
   private lastToggledDiv: any
+  public tradeOrders: any
+  public outstandingTradeOrders: any
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private stbStore: StbStore) {
+              private stbStore: StbStore,
+              public stbGetters: StbGetters) {
   }
 
   ionViewDidLoad() {
+    this.stbStore.currentPortfolio.subscribe(
+      data => {
+        this.tradeOrders = this.stbGetters.getCurrentPortfolioTradeOrdersGroupedByDate()
+        this.outstandingTradeOrders = this.stbGetters.getCurrentPortfolioOutstandingTradeOrdersGroupedByDate()
+        console.log(this.tradeOrders, this.outstandingTradeOrders)
+      }
+    )
   }
 
   /**
