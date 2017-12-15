@@ -19,7 +19,7 @@
 <ion-content no-padding>
 
   <ion-grid *ngFor="let security of stbStore.securityNames | async">
-    <ion-row align-items-center (click)="goToMandatePage({{security.name}})">
+    <ion-row align-items-center (click)="goToMandatePage(security.name)">
       <ion-col class="img-div">
         <img src="assets/imgs/stocks/{{security.name}}.png" class="img-responsive mr20">
         <b>{{security.name}}</b>
