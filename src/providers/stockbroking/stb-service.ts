@@ -29,6 +29,13 @@ export class StockbrokingProvider {
   }
 
   /**
+   * Get the list of securities tradeable on the floor of the NSE.
+   */
+  getSecurityNames() {
+    return this.http.get(this.constants.getSecurityNames)
+  }
+
+  /**
    * Determine if a trade order can be cancelled or not.
    *
    * @param {ITradeOrder} tradeOrder

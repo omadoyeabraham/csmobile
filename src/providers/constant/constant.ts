@@ -21,17 +21,18 @@ export class ConstantProvider {
   /**
    * URL's for API endpoints
    */
-  public baseURL = "https://restserver.cardinalstone.com/public/index.php/api/";
+  public baseURL = "https://restserver.cardinalstone.com/public/index.php/api/"
 
-  public findCustomerByNameUrl = this.baseURL + 'findCustomerByName';
+  public findCustomerByNameUrl = this.baseURL + 'findCustomerByName'
   public getTradeOrdersUrl = this.baseURL + 'findCustomerOrders'
+  public getSecurityNames = this.baseURL + 'getSecurityNames'
 
-  public loginLoadingMessage = "Loading Please Wait...";
-  public toastMessagePasswordMismatch = "Username and Password do not match!";
-  public toastMessageNetworkError = "Network error, please connect to a network!";
-  public toastMessageGeneral = "Something went wrong, please try again later!";
-  public toastDuration = 5000;
-  public toastPosition = "top";
+  public loginLoadingMessage = "Loading Please Wait..."
+  public toastMessagePasswordMismatch = "Username and Password do not match!"
+  public toastMessageNetworkError = "Network error, please connect to a network!"
+  public toastMessageGeneral = "Something went wrong, please try again later!"
+  public toastDuration = 5000
+  public toastPosition = "top"
 
   constructor(
     public http: Http,

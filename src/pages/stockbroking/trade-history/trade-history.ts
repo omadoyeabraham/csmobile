@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ITradeOrder } from '../../../models/TradeOrderInterface';
 import { StbStore } from '../../../providers/stockbroking/stb-store';
 import { StbGetters } from '../../../providers/stockbroking/stb-getters';
 

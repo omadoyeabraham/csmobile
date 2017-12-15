@@ -9,15 +9,19 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "ionic:serve": "ionic-app-scripts serve",
+    "test-coverage": "ng test --code-coverage",
+    "test": "ng test"
   },
   "dependencies": {
+    "@angular/cdk": "^5.0.1",
     "@angular/common": "^5.0.0",
     "@angular/compiler": "4.4.4",
     "@angular/compiler-cli": "4.4.4",
     "@angular/core": "4.4.4",
     "@angular/forms": "4.4.4",
     "@angular/http": "4.4.4",
+    "@angular/material": "^5.0.1",
     "@angular/platform-browser": "4.4.4",
     "@angular/platform-browser-dynamic": "4.4.4",
     "@ionic-native/core": "4.3.2",

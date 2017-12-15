@@ -73,6 +73,7 @@ export class LoginPage {
        *   - Set the authorization header for all subsequent requests
        *   - Get STB tradeOrders
        *   - Get STB tradeOrderTerms
+       *   - Get List of securities
        */
 
       // Having issues with the this.storage call because it returns a promise and we need this value to be immediately resolved
@@ -86,6 +87,7 @@ export class LoginPage {
        * Make asynchronous calls to get various data items that will be required later
        */
       this.stbStore.storeTradeOrders(data.customer.id, 0)
+      this.stbStore.storeSecurityNames()
 
       // Navigate to the welcome page
       this.navController.push('WelcomePage', {customerData: data});

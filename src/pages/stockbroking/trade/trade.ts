@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { StbStore } from '../../../providers/stockbroking/stb-store';
 
 /**
  * Generated class for the TradePage page.
@@ -15,11 +16,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class TradePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private stbStore: StbStore) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TradePage');
+  }
+
+  /**
+   * Migrate to the mandate page when a user clicks on the stock
+   * @param security
+   */
+  goToMandatePage(security: string) {
+    console.log(security)
   }
 
 }

@@ -16,6 +16,25 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content no-padding>
 
+  <ion-grid *ngFor="let security of stbStore.securityNames | async">
+    <ion-row align-items-center (click)="goToMandatePage({{security.name}})">
+      <ion-col class="img-div">
+        <img src="assets/imgs/stocks/{{security.name}}.png" class="img-responsive mr20">
+        <b>{{security.name}}</b>
+      </ion-col>
+      <ion-col class="font-size-16 align-right">
+        <div>Cur Price: &#8358;{{security.lastTradePrice}}</div>
+        <div class="text-red">Change: 29.34%</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- FAB BUTTON -->
+  <ion-fab bottom right class="mr20 p10">
+    <button ion-fab class="p35">
+      <ion-icon><span class="font-size-18">Trade</span></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

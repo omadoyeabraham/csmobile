@@ -1,3 +1,19 @@
 page-trade {
+    .img-responsive {
+      width: 70px;
+      height: auto;
+    }
+    .img-div {
+      display: flex;
+      align-items: center;
+    }
+    ion-grid {
+      &:hover {
+        cursor: pointer;
+      }
+    }
 
+    ion-grid:nth-child(even) {
+      background: #EFEFEF;
+    }
 }

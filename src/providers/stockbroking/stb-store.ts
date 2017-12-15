@@ -28,6 +28,8 @@ export class StbStore {
   public outstandingTradeOrdersSubject = new BehaviorSubject<any>([])
   public outstandingTradeOrdersGroupedByDateSubject = new BehaviorSubject<any>([])
 
+  public securityNamesSubject = new BehaviorSubject<any>([])
+
 
   /**
    * The Behavior Subjects exposed as observables so components and other services can only access them but not emit values through them.
@@ -42,6 +44,8 @@ export class StbStore {
   public tradeOrdersGroupedByDate = this.tradeOrdersGroupedByDateSubject.asObservable()
   public outstandingTradeOrders = this.outstandingTradeOrdersSubject.asObservable()
   public outstandingTradeOrdersGroupedByDate = this.outstandingTradeOrdersGroupedByDateSubject.asObservable()
+
+  public securityNames = this.securityNamesSubject.asObservable()
 
   // Used to determine if the user has any stockbroking portfolio
   public userHasStb: boolean = false
@@ -79,6 +83,10 @@ export class StbStore {
 
     this.storage.get('stb-outstandingTradeOrdersGroupedByDate').then((groupedTradeOrders) => {
       this.outstandingTradeOrdersGroupedByDateSubject.next(groupedTradeOrders)
+    })
+
+    this.storage.get('stb-securityNames').then((securityNames) => {
+      this.securityNamesSubject.next(securityNames)
     })
 
   }
@@ -195,6 +203,21 @@ export class StbStore {
 
     let currentPortfolio = portfolios[portfolioIndex]
     this.currentPortfolioSubject.next(currentPortfolio)
+  }
+
+  /**
+   * Get the list of securities tradeable on the floor of the NSE, broadcast and store them.
+   *
+   * @memberof StbStore
+   */
+  storeSecurityNames() :void {
+    this.stbService.getSecurityNames().subscribe(
+      data => {
+        this.securityNamesSubject.next(data)
+
+        this.storage.set('stb-securityNames', data)
+      }
+    )
   }
 
 

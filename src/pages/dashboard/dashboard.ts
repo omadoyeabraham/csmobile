@@ -11,7 +11,7 @@ import { IonicPage, NavController, NavParams  } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-dashboard',
-  templateUrl: 'dashboard.html',
+  templateUrl: './dashboard.html',
 })
 export class DashboardPage {
   private customerData: any;
@@ -23,7 +23,6 @@ export class DashboardPage {
   }
 
   ionViewDidLoad() {
-    console.log(this.customerData);
   }
 
   ionViewWillEnter(){
