@@ -26,6 +26,7 @@ export class ConstantProvider {
   public findCustomerByNameUrl = this.baseURL + 'findCustomerByName'
   public getTradeOrdersUrl = this.baseURL + 'findCustomerOrders'
   public getSecurityNames = this.baseURL + 'getSecurityNames'
+  public getTradeOrderTermsUrl = this.baseURL + 'findActiveTradeOrderTerms'
 
   public loginLoadingMessage = "Loading Please Wait..."
   public toastMessagePasswordMismatch = "Username and Password do not match!"

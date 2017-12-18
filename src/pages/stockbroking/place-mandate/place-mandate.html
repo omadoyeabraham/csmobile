@@ -12,7 +12,68 @@
 
 </ion-header>
 
+<ion-content no-padding>
+  <switch-portfolio [showCashAvailableForTrading]="true" [showTotalValue]="false">
+  </switch-portfolio>
 
-<ion-content padding>
+  <ion-item-divider color="light" class="font-size-18 bg-light-blue"></ion-item-divider>
+
+  <form [formGroup]="placeMandateForm" (ngSubmit)="logForm()">
+
+    <!-- Order Type -->
+    <ion-item>
+      <ion-label floating>Order Type</ion-label>
+      <ion-select formControlName="orderType">
+        <ion-option *ngFor="let orderType of orderTypes" [value]="orderType.value">{{orderType.text}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Symbol -->
+    <ion-item>
+      <ion-label floating>Symbol</ion-label>
+      <ion-select formControlName="security">
+        <ion-option *ngFor="let symbol of stbStore.securityNames | async" [value]="symbol.name">{{symbol.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Price Option -->
+    <ion-item>
+      <ion-label floating>Price Option</ion-label>
+      <ion-select formControlName="priceOption" (ionChange)="onPriceOptionChange()">
+        <ion-option *ngFor="let priceOption of priceOptions" [value]="priceOption.value">{{priceOption.text}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Limit Price -->
+    <ion-item *ngIf="isLimitOrder">
+      <ion-label floating>Limit Price</ion-label>
+      <ion-input type="number" formControlName="limitPrice" required></ion-input>
+    </ion-item>
+
+    <!-- Quantity -->
+    <ion-item>
+      <ion-label floating>Quantity</ion-label>
+      <ion-input type="number" formControlName="quantity"></ion-input>
+    </ion-item>
+
+    <!-- Order Terms (LIMIT) -->
+    <ion-item *ngIf="!isMarketOrder">
+      <ion-label floating>Order Term</ion-label>
+      <ion-select formControlName="orderTerm" [(ngModel)]="orderTerm">
+        <ion-option *ngFor="let orderTerm of stbStore.tradeOrderTerms | async" [value]="orderTerm.name">{{orderTerm.label}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Order Terms (LIMIT) -->
+    <ion-item *ngIf="isMarketOrder">
+      <ion-label floating>Order Term</ion-label>
+      <ion-select formControlName="orderTerm" [(ngModel)]="orderTerm" readonly>
+        <ion-option *ngFor="let orderTerm of stbStore.tradeOrderTerms | async" [value]="orderTerm.name">{{orderTerm.label}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <button ion-button type="submit" [disabled]="!placeMandateForm.valid" class="mt40" block>
+      Preview Mandate</button>
+  </form>
 
 </ion-content>

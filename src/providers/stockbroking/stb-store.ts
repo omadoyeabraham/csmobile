@@ -27,6 +27,7 @@ export class StbStore {
   public tradeOrdersGroupedByDateSubject = new BehaviorSubject<any>([])
   public outstandingTradeOrdersSubject = new BehaviorSubject<any>([])
   public outstandingTradeOrdersGroupedByDateSubject = new BehaviorSubject<any>([])
+  public tradeOrderTermsSubject = new BehaviorSubject<any>([])
 
   public securityNamesSubject = new BehaviorSubject<any>([])
   public securitySelectedOnTradePageSubject = new BehaviorSubject<string>('')
@@ -45,6 +46,7 @@ export class StbStore {
   public tradeOrdersGroupedByDate = this.tradeOrdersGroupedByDateSubject.asObservable()
   public outstandingTradeOrders = this.outstandingTradeOrdersSubject.asObservable()
   public outstandingTradeOrdersGroupedByDate = this.outstandingTradeOrdersGroupedByDateSubject.asObservable()
+  public tradeOrderTerms = this.tradeOrderTermsSubject.asObservable()
 
   public securityNames = this.securityNamesSubject.asObservable()
   public securitySelectedOnTradePage = this.securitySelectedOnTradePageSubject.asObservable()
@@ -89,6 +91,10 @@ export class StbStore {
 
     this.storage.get('stb-securityNames').then((securityNames) => {
       this.securityNamesSubject.next(securityNames)
+    })
+
+    this.storage.get('stb-tradeOrderTerms').then((tradeOrderTerms) => {
+      this.tradeOrderTermsSubject.next(tradeOrderTerms)
     })
 
   }
@@ -185,6 +191,30 @@ export class StbStore {
       error => {
         console.error('An error occured whilst getting trade orders')
         console.error(error)
+      }
+    )
+  }
+
+  /**
+   * Make call to the stbService to get the trade order terms.
+   * Store these terms on the client side, and also emit them on the BehaviorSubject
+   *
+   * @memberof StbStore
+   */
+  storeTradeOrderTerms() :void {
+    this.stbService.getTradeOrderTerms().subscribe(
+      (data: any) => {
+        if(data.item !== undefined){
+          let tradeOrderTerms = data.item
+
+          // Sort the trade order terms
+          tradeOrderTerms.sort((a, b) => {
+            return a.defLifeTime - b.defLifeTime
+          })
+
+          this.tradeOrderTermsSubject.next(tradeOrderTerms)
+          this.storage.set('stb-tradeOrderTerms', tradeOrderTerms)
+        }
       }
     )
   }

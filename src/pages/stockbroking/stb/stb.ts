@@ -4,10 +4,8 @@ import { StbStore } from '../../../providers/stockbroking/stb-store';
 
 
 /**
- * Generated class for the StbPage page.
+ *This STB Page is the parent/wrapper page for all other stockbroking pages
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
  */
 
 @IonicPage()

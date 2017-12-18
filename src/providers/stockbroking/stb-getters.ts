@@ -69,6 +69,23 @@ export class StbGetters {
   }
 
   /**
+   * Returns the cash available of the currently selected portfolio
+   *
+   * @returns {number}
+   * @memberof StbGetters
+   */
+  getCurrentPortfolioCashAvailableForTrading(): number {
+    let currentPortfolio = this.stbStore.currentPortfolioSubject.getValue()
+
+    // Return 0 if the current portfolio is empty
+    if (currentPortfolio === {} || typeof currentPortfolio === 'undefined') {
+      return 0
+    }
+
+    return currentPortfolio.availableCash.amount
+  }
+
+  /**
    * Get the index of the current portfolio in the array of the entire portfolios
    *
    * @returns {number}

@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { IonicPage, NavController, NavParams } from 'ionic-angular'
 import { StbStore } from '../../../providers/stockbroking/stb-store'
 
+
 /**
  * Generated class for the TradePage page.
  *

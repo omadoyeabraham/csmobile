@@ -28,6 +28,10 @@ export class StockbrokingProvider {
     return this.http.get(`${this.constants.getTradeOrdersUrl}/${userID}/${cacheStatus}`)
   }
 
+  getTradeOrderTerms() {
+    return this.http.get(this.constants.getTradeOrderTermsUrl)
+  }
+
   /**
    * Get the list of securities tradeable on the floor of the NSE.
    */

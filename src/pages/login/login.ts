@@ -87,7 +87,9 @@ export class LoginPage {
        * Make asynchronous calls to get various data items that will be required later
        */
       this.stbStore.storeTradeOrders(data.customer.id, 0)
+      this.stbStore.storeTradeOrderTerms()
       this.stbStore.storeSecurityNames()
+      this.stbStore.storeTradeOrderTerms()
 
       // Navigate to the welcome page
       this.navController.push('WelcomePage', {customerData: data});

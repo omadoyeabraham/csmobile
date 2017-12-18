@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { IPortfolio } from '../../models/PortfolioInterface';
 import { StbStore } from '../../providers/stockbroking/stb-store';
@@ -16,6 +16,9 @@ import { StbGetters } from '../../providers/stockbroking/stb-getters';
 })
 export class SwitchPortfolioComponent {
 
+  @Input() showTotalValue: boolean
+  @Input() showCashAvailableForTrading: boolean
+
   // Portfolios owned by the user
   portfolios: Array<IPortfolio>
 
@@ -30,6 +33,9 @@ export class SwitchPortfolioComponent {
 
   // Various calculated fields about the currently selected portfolio
   currentPortfolioTotalValue: number
+
+  // The amount available for trading on the current portfolio
+  currentPortfolioCashAvailableForTrading: number
 
   // Expose the slides in the slider to the class for tracking and appropriate update
   @ViewChild(Slides) slides: Slides;
@@ -52,6 +58,7 @@ export class SwitchPortfolioComponent {
         this.currentPortfolio = data
         this.currentPortfolioTotalValue = this.stbGetters.getCurrentPortfolioTotalValue()
         this.currentPortfolioIndex = this.stbGetters.getCurrentPortfolioIndex()
+        this.currentPortfolioCashAvailableForTrading = this.stbGetters.getCurrentPortfolioCashAvailableForTrading()
       }
     )
 
@@ -62,7 +69,6 @@ export class SwitchPortfolioComponent {
    */
   portfolioChanged() {
     // The current portfolio index is +1 because the portfolios are in a zero indexed array
-
     let activeSlideIndex = this.slides.getActiveIndex()
 
     // Hack to ensure that we do not overshoot the number of portfolios index

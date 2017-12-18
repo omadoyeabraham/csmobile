@@ -26,9 +26,15 @@
             <span>&lt; SWIPE &gt;</span>
           </ion-col>
           <ion-col class="pb0" style="text-align: right" col-9>
-            <h6 class="m0 font-size-13">Portfolio Value</h6>
+            <h6 *ngIf="showTotalValue" class="m0 font-size-13">Portfolio Value</h6>
+            <h6 *ngIf="showCashAvailableForTrading" class="m0 font-size-13">Available Cash</h6>
             <h4 class="m0 font-size-20s">
-              &#8358;{{currentPortfolioTotalValue | number:'1.2-2'}}
+              <span *ngIf="showCashAvailableForTrading">
+                 &#8358;{{currentPortfolioCashAvailableForTrading | number:'1.2-2'}}
+              </span>
+              <span *ngIf="showTotalValue">
+                 &#8358;{{currentPortfolioTotalValue | number:'1.2-2'}}
+              </span>
             </h4>
           </ion-col>
         </ion-row>
