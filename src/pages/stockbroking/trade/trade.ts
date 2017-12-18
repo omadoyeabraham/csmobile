@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { StbStore } from '../../../providers/stockbroking/stb-store';
+import { Component } from '@angular/core'
+import { IonicPage, NavController, NavParams } from 'ionic-angular'
+import { StbStore } from '../../../providers/stockbroking/stb-store'
 
 /**
  * Generated class for the TradePage page.
@@ -28,8 +28,10 @@ export class TradePage {
    * Migrate to the mandate page when a user clicks on the stock
    * @param security
    */
-  goToMandatePage(security: string) {
-    console.log(security)
+  goToMandatePage(securityName: string = '') {
+    this.stbStore.setSecuritySelectedOnTradePage(securityName)
+
+    this.navCtrl.push('PlaceMandatePage')
   }
 
 }

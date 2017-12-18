@@ -29,6 +29,7 @@ export class StbStore {
   public outstandingTradeOrdersGroupedByDateSubject = new BehaviorSubject<any>([])
 
   public securityNamesSubject = new BehaviorSubject<any>([])
+  public securitySelectedOnTradePageSubject = new BehaviorSubject<string>('')
 
 
   /**
@@ -46,6 +47,7 @@ export class StbStore {
   public outstandingTradeOrdersGroupedByDate = this.outstandingTradeOrdersGroupedByDateSubject.asObservable()
 
   public securityNames = this.securityNamesSubject.asObservable()
+  public securitySelectedOnTradePage = this.securitySelectedOnTradePageSubject.asObservable()
 
   // Used to determine if the user has any stockbroking portfolio
   public userHasStb: boolean = false
@@ -218,6 +220,16 @@ export class StbStore {
         this.storage.set('stb-securityNames', data)
       }
     )
+  }
+
+  /**
+   * Set and emit the security selected on the tradepage by a user
+   *
+   * @param securityName
+   */
+  setSecuritySelectedOnTradePage(securityName = '') {
+    this.securitySelectedOnTradePageSubject.next(securityName)
+    this.storage.set('stb-securitySelectedOnTradePage', securityName)
   }
 
 
