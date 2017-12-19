@@ -30,7 +30,10 @@ export class StbStore {
   public tradeOrderTermsSubject = new BehaviorSubject<any>([])
 
   public securityNamesSubject = new BehaviorSubject<any>([])
-  public securitySelectedOnTradePageSubject = new BehaviorSubject<string>('')
+  public securitySelectedOnTradePageSubject = new BehaviorSubject<any>({})
+  public allSecuritiesInCurrentPortfolioSubject = new BehaviorSubject<any>([])
+  public marketDataSubject = new BehaviorSubject<any>([])
+  public previewedTradeOrderSubject = new BehaviorSubject<any>({})
 
 
   /**
@@ -50,6 +53,9 @@ export class StbStore {
 
   public securityNames = this.securityNamesSubject.asObservable()
   public securitySelectedOnTradePage = this.securitySelectedOnTradePageSubject.asObservable()
+  public allSecuritiesInCurrentPortfolio = this.allSecuritiesInCurrentPortfolioSubject.asObservable()
+  public marketData = this.marketDataSubject.asObservable()
+  public previewedTradeOrder = this.previewedTradeOrderSubject.asObservable()
 
   // Used to determine if the user has any stockbroking portfolio
   public userHasStb: boolean = false
@@ -95,6 +101,10 @@ export class StbStore {
 
     this.storage.get('stb-tradeOrderTerms').then((tradeOrderTerms) => {
       this.tradeOrderTermsSubject.next(tradeOrderTerms)
+    })
+
+    this.storage.get('stb-marketData').then((marketData) => {
+      this.marketDataSubject.next(marketData)
     })
 
   }
@@ -258,8 +268,42 @@ export class StbStore {
    * @param securityName
    */
   setSecuritySelectedOnTradePage(securityName = '') {
-    this.securitySelectedOnTradePageSubject.next(securityName)
-    this.storage.set('stb-securitySelectedOnTradePage', securityName)
+    let securityData = this.marketDataSubject.getValue().find((security) => {
+      return security.name === securityName
+    })
+
+    if(securityData !== undefined) {
+      this.securitySelectedOnTradePageSubject.next(securityData)
+      this.storage.set('stb-securitySelectedOnTradePage', securityData)
+    } else {
+      this.securitySelectedOnTradePageSubject.next({})
+      this.storage.set('stb-securitySelectedOnTradePage', {})
+    }
+
+  }
+
+  /**
+   * Retrieve and store the STB market data
+   *
+   */
+  storeMarketData() {
+    this.stbService.getMarketData().subscribe(
+      (data) => {
+
+        this.marketDataSubject.next(data)
+        this.storage.set('stb-marketData', data)
+      }
+    )
+  }
+
+  /**
+   * set the previewed trade order filled in by the user
+   *
+   * @memberof StbStore
+   */
+  setPreviewedTradeOrder(tradeOrder: ITradeOrder) {
+    this.previewedTradeOrderSubject.next(tradeOrder)
+    this.storage.set('stb-previewedTradeOrder', tradeOrder)
   }
 
 

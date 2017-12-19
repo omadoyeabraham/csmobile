@@ -39,4 +39,9 @@ export interface ITradeOrder {
   "canBeCancelled" ?: boolean,
   "isBooked"?: boolean,
   "cspOrderStatus"?: string,
+  "consideration"?:any,
+  "totalFees"?: any,
+  "orderTotalDescription"?: any,
+  "formattedTradeOrderTotal"?: any
 }
+

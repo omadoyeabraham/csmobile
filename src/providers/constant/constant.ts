@@ -27,6 +27,8 @@ export class ConstantProvider {
   public getTradeOrdersUrl = this.baseURL + 'findCustomerOrders'
   public getSecurityNames = this.baseURL + 'getSecurityNames'
   public getTradeOrderTermsUrl = this.baseURL + 'findActiveTradeOrderTerms'
+  public previewTradeOrderUrl = this.baseURL + 'getTradeOrderTotal'
+  public marketDataUrl = this.baseURL + 'getSecurity'
 
   public loginLoadingMessage = "Loading Please Wait..."
   public toastMessagePasswordMismatch = "Username and Password do not match!"
@@ -34,6 +36,7 @@ export class ConstantProvider {
   public toastMessageGeneral = "Something went wrong, please try again later!"
   public toastDuration = 5000
   public toastPosition = "top"
+  public previewTradeOrderLoadingMessage = 'Calculating order cost'
 
   constructor(
     public http: Http,
@@ -44,12 +47,15 @@ export class ConstantProvider {
    * Gets the toast error message
    *
    * @param status Response error status
+   * @param toastKind  The toastKind(toastError | toastSuccess | toastInfo)
    */
-  getToastMessage(message: string){
+  presentToast(message: string, toastKind: string){
     let toaster = this.toastController.create({
       message: message,
       duration: this.toastDuration,
-      position: this.toastPosition
+      position: this.toastPosition,
+      showCloseButton: true,
+      cssClass: toastKind
     });
     toaster.present();
   }

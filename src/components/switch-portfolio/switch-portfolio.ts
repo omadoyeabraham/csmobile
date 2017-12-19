@@ -59,6 +59,7 @@ export class SwitchPortfolioComponent {
         this.currentPortfolioTotalValue = this.stbGetters.getCurrentPortfolioTotalValue()
         this.currentPortfolioIndex = this.stbGetters.getCurrentPortfolioIndex()
         this.currentPortfolioCashAvailableForTrading = this.stbGetters.getCurrentPortfolioCashAvailableForTrading()
+        this.stbStore.allSecuritiesInCurrentPortfolioSubject.next(this.stbGetters.getAllSecuritiesInCurrentPortfolio())
       }
     )
 

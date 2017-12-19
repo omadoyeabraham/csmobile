@@ -363,6 +363,31 @@ export class StbGetters {
   }
 
   /**
+   * Returns an array of all securities in the currently selected portfolio
+   */
+  getAllSecuritiesInCurrentPortfolio() {
+    if (this.currentPortfolioIsNotSet()) {
+      return []
+    }
+
+    let portfolioHoldings = this.getCurrentPortfolioStockHoldings()
+    if (portfolioHoldings.length === 0) {
+      return []
+    }
+
+    let stockNames = []
+
+    portfolioHoldings.forEach((portfolioHolding) => {
+      stockNames.push({
+        name: portfolioHolding.securityName,
+        quantityHeld: portfolioHolding.quantityHeld
+      })
+    })
+
+    return stockNames
+  }
+
+  /**
    * Get tradeOrders for the currently selected portfolio
    */
   getCurrentPortfolioTradeOrders() {

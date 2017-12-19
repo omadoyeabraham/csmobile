@@ -129,7 +129,16 @@ export class StockbrokingProvider {
    * @param tradeOrder
    */
   previewTradeOrder(tradeOrder: ITradeOrder) {
-    return this.http.post(this.constants.)
+    return this.http.post(this.constants.previewTradeOrderUrl, tradeOrder)
+  }
+
+  /**
+   * Http call to get market data
+   *
+   * @memberof StockbrokingProvider
+   */
+  getMarketData() {
+    return this.http.get(this.constants.marketDataUrl)
   }
 
 }

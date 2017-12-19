@@ -23,7 +23,7 @@
     <!-- Order Type -->
     <ion-item>
       <ion-label floating>Order Type</ion-label>
-      <ion-select formControlName="orderType">
+      <ion-select formControlName="orderType" (ionChange)="onOrderTypeChange()">
         <ion-option *ngFor="let orderType of orderTypes" [value]="orderType.value">{{orderType.text}}</ion-option>
       </ion-select>
     </ion-item>
@@ -31,8 +31,8 @@
     <!-- Symbol -->
     <ion-item>
       <ion-label floating>Symbol</ion-label>
-      <ion-select formControlName="instrument" [(ngModel)]="selectedSecurity">
-        <ion-option *ngFor="let symbol of stbStore.securityNames | async" [value]="symbol.name">{{symbol.name}}</ion-option>
+      <ion-select formControlName="instrument" [(ngModel)]="selectedSecurity" (ionChange)="onInstrumentChange()">
+        <ion-option *ngFor="let symbol of displaySecurities" [value]="symbol.name">{{symbol.name}}</ion-option>
       </ion-select>
     </ion-item>
 
@@ -50,10 +50,16 @@
       <ion-input type="number" formControlName="limitPrice" required></ion-input>
     </ion-item>
 
-    <!-- Quantity -->
+    <!-- Quantity Requested-->
     <ion-item>
       <ion-label floating>Quantity</ion-label>
       <ion-input type="number" formControlName="quantityRequested"></ion-input>
+    </ion-item>
+
+    <!-- Quantity Held-->
+    <ion-item *ngIf="showQuantityHeld">
+      <ion-label floating>Quantity Held</ion-label>
+      <ion-input type="text" [value]="stockQuantityHeld" readonly></ion-input>
     </ion-item>
 
     <!-- Order Terms (LIMIT) -->

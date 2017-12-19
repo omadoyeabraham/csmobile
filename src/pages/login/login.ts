@@ -90,6 +90,7 @@ export class LoginPage {
       this.stbStore.storeTradeOrderTerms()
       this.stbStore.storeSecurityNames()
       this.stbStore.storeTradeOrderTerms()
+      this.stbStore.storeMarketData()
 
       // Navigate to the welcome page
       this.navController.push('WelcomePage', {customerData: data});
@@ -97,11 +98,11 @@ export class LoginPage {
     },
     err => {
       if(err === 401){
-            this.constant.getToastMessage(this.constant.toastMessagePasswordMismatch);
+            this.constant.presentToast(this.constant.toastMessagePasswordMismatch, 'toastError');
           }
 
       if(err === null){
-            this.constant.getToastMessage(this.constant.toastMessageNetworkError);
+            this.constant.presentToast(this.constant.toastMessageNetworkError, 'toastError');
           }
           loader.dismiss();
     });
