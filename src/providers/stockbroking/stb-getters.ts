@@ -286,6 +286,52 @@ export class StbGetters {
 
   }
 
+   /**
+   * Return the bond data (allocation and performance) for the current portfolio
+   *
+   * @memberof StbGetters
+   */
+  getCurrentPortfolioBondData() {
+    if (this.currentPortfolioIsNotSet()) {
+      return null
+    }
+
+    let portfolioHoldings = this.getCurrentPortfolioBondHoldings()
+    if (portfolioHoldings.length === 0) {
+      return null
+    }
+
+    let bondData = []
+    let bondValue = 0
+    let bondPerformance = 0
+    let totalPortfolioValue = 0
+
+    // Obtain the total value of the portfolio
+    portfolioHoldings.forEach((portfolioHolding) => {
+      totalPortfolioValue += parseFloat(portfolioHolding.valuation)
+    })
+
+    portfolioHoldings.forEach((portfolioHolding) => {
+
+      // get the stock's performance, value, and % of the portfolio
+      bondValue = parseFloat(portfolioHolding.valuation)
+      bondPerformance = parseFloat(portfolioHolding.percentGain)
+
+      let percentageOfPortfolio = ((bondValue / totalPortfolioValue) * 100).toFixed(2)
+      // Because highcharts requires this structure to draw pie charts
+      bondData.push({
+        name: portfolioHolding.securityName,
+        y: bondValue,
+        percentageOfPortfolio: percentageOfPortfolio,
+        percentageGain: bondPerformance
+      })
+
+    })
+
+    return bondData
+
+  }
+
   /**
    * Return the chart data used to draw the stock allocation chart for the current portfolio
    *
@@ -302,6 +348,16 @@ export class StbGetters {
   */
   getCurrentPortfolioStockPerformanceChartData() {
     const chartData = this.chartsService.getBarChart(this.getCurrentPortfolioStockData())
+
+    return chartData
+  }
+
+  /**
+  * Return the chart data used to draw the bond performance chart for the current portfolio
+  *
+  */
+  getCurrentPortfolioBondPerformanceChartData() {
+    const chartData = this.chartsService.getBarChart(this.getCurrentPortfolioBondData())
 
     return chartData
   }

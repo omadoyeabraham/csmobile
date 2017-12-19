@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms'
 import { StbStore } from '../../../providers/stockbroking/stb-store';
+import { StockbrokingProvider } from '../../../providers/stockbroking/stb-service';
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 /**
  * Generated class for the PlaceMandatePage page.
@@ -31,29 +33,41 @@ export class PlaceMandatePage {
   private isMarketOrder: boolean = false
   private placeMandateForm: FormGroup
   private orderTerm: String
+  private selectedSecurity: String
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private formBuilder: FormBuilder,
-              private stbStore: StbStore) {
+              private stbStore: StbStore,
+              private stbService: StockbrokingProvider,
+              private loadingController: LoadingController) {
+
+    // Set the selected security if it exists
+    if(this.stbStore.securitySelectedOnTradePageSubject.getValue() !== '') {
+      this.selectedSecurity = this.stbStore.securitySelectedOnTradePageSubject.getValue()
+    }
 
     this.placeMandateForm = this.formBuilder.group({
       orderType: ['', Validators.required],
-      security: ['', Validators.required],
-      priceOption: ['', Validators.required],
-      quantity: ['', Validators.required],
+      instrument: ['', Validators.required],
+      priceType: ['', Validators.required],
+      quantityRequested: ['', Validators.required],
       limitPrice: [''],
-      orderTerm: ['', Validators.required]
+      orderTermName: ['']
     })
 
   }
 
-  logForm() {
-     // Because market orders can only be good for a day, and '0000000000' is the code for good for a day
-    // if(this.placeMandateForm.value.priceOption === 'MARKET'){
-    //   this.placeMandateForm.value.orderTerm = '0000000000'
-    // }
-    console.log(this.placeMandateForm.value)
+  previewMandate() {
+    let tradeOrder = this.placeMandateForm.value
+
+    // SET the other trade details not filled in the form
+    tradeOrder.orderOrigin = 'WEB'
+    tradeOrder.orderCurrency = 'NGN'
+    tradeOrder.portfolioLabel = this.stbStore.currentPortfolioSubject.getValue().label
+    tradeOrder.portfolioName = this.stbStore.currentPortfolioSubject.getValue().name
+
+    console.log(tradeOrder)
   }
 
   ionViewDidLoad() {

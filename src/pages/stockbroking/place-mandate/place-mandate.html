@@ -18,7 +18,7 @@
 
   <ion-item-divider color="light" class="font-size-18 bg-light-blue"></ion-item-divider>
 
-  <form [formGroup]="placeMandateForm" (ngSubmit)="logForm()">
+  <form [formGroup]="placeMandateForm">
 
     <!-- Order Type -->
     <ion-item>
@@ -31,7 +31,7 @@
     <!-- Symbol -->
     <ion-item>
       <ion-label floating>Symbol</ion-label>
-      <ion-select formControlName="security">
+      <ion-select formControlName="instrument" [(ngModel)]="selectedSecurity">
         <ion-option *ngFor="let symbol of stbStore.securityNames | async" [value]="symbol.name">{{symbol.name}}</ion-option>
       </ion-select>
     </ion-item>
@@ -39,7 +39,7 @@
     <!-- Price Option -->
     <ion-item>
       <ion-label floating>Price Option</ion-label>
-      <ion-select formControlName="priceOption" (ionChange)="onPriceOptionChange()">
+      <ion-select formControlName="priceType" (ionChange)="onPriceOptionChange()">
         <ion-option *ngFor="let priceOption of priceOptions" [value]="priceOption.value">{{priceOption.text}}</ion-option>
       </ion-select>
     </ion-item>
@@ -53,26 +53,26 @@
     <!-- Quantity -->
     <ion-item>
       <ion-label floating>Quantity</ion-label>
-      <ion-input type="number" formControlName="quantity"></ion-input>
+      <ion-input type="number" formControlName="quantityRequested"></ion-input>
     </ion-item>
 
     <!-- Order Terms (LIMIT) -->
     <ion-item *ngIf="!isMarketOrder">
       <ion-label floating>Order Term</ion-label>
-      <ion-select formControlName="orderTerm" [(ngModel)]="orderTerm">
+      <ion-select formControlName="orderTermName" [(ngModel)]="orderTerm">
         <ion-option *ngFor="let orderTerm of stbStore.tradeOrderTerms | async" [value]="orderTerm.name">{{orderTerm.label}}</ion-option>
       </ion-select>
     </ion-item>
 
-    <!-- Order Terms (LIMIT) -->
+    <!-- Order Terms (MARKET) -->
     <ion-item *ngIf="isMarketOrder">
       <ion-label floating>Order Term</ion-label>
-      <ion-select formControlName="orderTerm" [(ngModel)]="orderTerm" readonly>
+      <ion-select formControlName="orderTermName" [(ngModel)]="orderTerm" disabled="true">
         <ion-option *ngFor="let orderTerm of stbStore.tradeOrderTerms | async" [value]="orderTerm.name">{{orderTerm.label}}</ion-option>
       </ion-select>
     </ion-item>
 
-    <button ion-button type="submit" [disabled]="!placeMandateForm.valid" class="mt40" block>
+    <button ion-button (click)="previewMandate()" [disabled]="!placeMandateForm.valid" class="mt40" block>
       Preview Mandate</button>
   </form>
 

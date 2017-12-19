@@ -25,13 +25,17 @@ import { StbGetters } from '../../../providers/stockbroking/stb-getters';
 export class StbSummaryPage {
 
   // Default chart type shown on component load
-  chartType: string = "portfolioPerformance"
+  chartType: string = "stockPerformance"
 
   /**
    * Class variables
    */
   initialCurrentPortfolioSubject: any
   currentPortfolio: IPortfolio
+  bondPerformanceChartObject: any
+  stockPerformanceChartObject: any
+  bondData: any
+  stockData: any
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -46,6 +50,8 @@ export class StbSummaryPage {
     this.stbStore.currentPortfolioSubject.subscribe(
       data => {
         this.currentPortfolio = data
+        this.bondData = this.stbGetters.getCurrentPortfolioBondData()
+        this.stockData = this.stbGetters.getCurrentPortfolioStockData()
       }
     )
 
@@ -65,42 +71,58 @@ export class StbSummaryPage {
         this.currentPortfolio = data
 
         // Update the charts
-        let portfolioAllocationChartObject = this.stbGetters.getCurrentPortfolioStockAllocationChartData()
-        let portfolioPerformanceChartObject = this.stbGetters.getCurrentPortfolioStockPerformanceChartData()
-        Highcharts.chart('portfolioAllocationChart', portfolioAllocationChartObject)
-        Highcharts.chart('portfolioPerformanceChart', portfolioPerformanceChartObject)
+        this.bondPerformanceChartObject = this.stbGetters.getCurrentPortfolioBondPerformanceChartData()
+        this.stockPerformanceChartObject = this.stbGetters.getCurrentPortfolioStockPerformanceChartData()
+
+        this.bondData = this.stbGetters.getCurrentPortfolioBondData()
+        this.stockData = this.stbGetters.getCurrentPortfolioStockData()
+
+        if (this.bondData) {
+          Highcharts.chart('bondPerformanceChart', this.bondPerformanceChartObject)
+        }
+        if (this.stockData) {
+          Highcharts.chart('stockPerformanceChart', this.stockPerformanceChartObject)
+        }
 
       }
     )
 
     // Initialize and draw the charts showing the user's portfolio performance and allocation
-    let portfolioAllocationChartObject = this.stbGetters.getCurrentPortfolioStockAllocationChartData()
-    let portfolioPerformanceChartObject = this.stbGetters.getCurrentPortfolioStockPerformanceChartData()
-    Highcharts.chart('portfolioAllocationChart', portfolioAllocationChartObject)
-    Highcharts.chart('portfolioPerformanceChart', portfolioPerformanceChartObject)
+     this.bondPerformanceChartObject = this.stbGetters.getCurrentPortfolioBondPerformanceChartData()
+     this.stockPerformanceChartObject = this.stbGetters.getCurrentPortfolioStockPerformanceChartData()
+
+    this.bondData = this.stbGetters.getCurrentPortfolioBondData()
+    this.stockData = this.stbGetters.getCurrentPortfolioStockData()
+
+    if(this.bondData) {
+      Highcharts.chart('bondPerformanceChart', this.bondPerformanceChartObject)
+    }
+    if(this.stockData) {
+      Highcharts.chart('stockPerformanceChart', this.stockPerformanceChartObject)
+    }
 
   }
 
   /**
-   * Determine whether or not to hide the portfolio performance chart based on what segment is selected
+   * Determine whether or not to hide the stock performance chart based on what segment is selected
    * This method was used because of the clash btw ionic's segment and highcharts (where charts become
    * invisible after segments are toggled)
    *
    * @return boolean
    */
-  hidePerformanceChart() {
-    return this.chartType === 'portfolioAllocation'
+  hideStockPerformanceChart() {
+    return this.chartType === 'bondPerformance'
   }
 
   /**
-   * Determine whether or not to hide the portfolio performance chart based on what segment is selected
+   * Determine whether or not to hide the bond performance chart based on what segment is selected
    * This method was used because of the clash btw ionic's segment and highcharts (where charts become
    * invisible after segments are toggled)
    *
    * @return boolean
    */
-  hideAllocationChart() {
-    return this.chartType === 'portfolioPerformance'
+  hideBondPerformanceChart() {
+    return this.chartType === 'stockPerformance'
   }
 
 

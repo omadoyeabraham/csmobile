@@ -53,36 +53,43 @@
     <!-- Stock Holdings and Allocation -->
     <div no-padding>
       <ion-segment [(ngModel)]="chartType">
-        <ion-segment-button value="portfolioPerformance">
+        <ion-segment-button value="stockPerformance">
           Stocks Performance
         </ion-segment-button>
-        <ion-segment-button value="portfolioAllocation">
-          Stocks Allocation
+        <ion-segment-button value="bondPerformance">
+         Bond Performance
         </ion-segment-button>
       </ion-segment>
     </div>
 
-    <div id="portfolioPerformanceChart"
+    <div *ngIf="stockData" id="stockPerformanceChart"
          style="height: 200px"
-         [ngClass]="{'hideGraph': hidePerformanceChart()}">
+         [ngClass]="{'hideGraph': hideStockPerformanceChart()}">
     </div>
 
-    <div id="portfolioAllocationChart"
+    <ion-item *ngIf="!stockData" [ngClass]="{'hideGraph': hideStockPerformanceChart()}" id="stockPerformanceChart">
+      <ion-grid>
+        <ion-row class="mt40 mb40">
+          <ion-col text-center class="font-size-16">
+            No stock holdings in this portfolio
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+    <div *ngIf="bondData" id="bondPerformanceChart"
          style="display: block;  height: 200px"
-         [ngClass]="{'hideGraph': hideAllocationChart()}">
+         [ngClass]="{'hideGraph': hideBondPerformanceChart()}">
     </div>
 
-    <!-- <div [ngSwitch]="chart">
-
-      Stock Performance Chart
-      <div *ngSwitchCase="'stockPerformance'">
-      </div>
-
-      Stock Allocation Chart
-      <div *ngSwitchCase="'stockAllocation'">
-        <div id="stockAllocationChart" style="display: block;  height: 200px"></div>
-      </div>
-
-    </div> -->
+    <ion-item *ngIf="!bondData" [ngClass]="{'hideGraph': hideBondPerformanceChart()}" id="bondPerformanceChart">
+      <ion-grid>
+        <ion-row class="mt40 mb40">
+          <ion-col text-center class="font-size-16">
+            No bond holdings in this portfolio
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
 
 </ion-content>

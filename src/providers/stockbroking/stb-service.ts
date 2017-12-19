@@ -124,4 +124,12 @@ export class StockbrokingProvider {
     return groupedTradeOrders
   }
 
+  /**
+   * Preview a trade order and get the fees & total cost from zanibal
+   * @param tradeOrder
+   */
+  previewTradeOrder(tradeOrder: ITradeOrder) {
+    return this.http.post(this.constants.)
+  }
+
 }
