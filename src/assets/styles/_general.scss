@@ -25,6 +25,10 @@
   background: #7e9bb0;
   color: #FFF;
 }
+.bg-light-blue-2{
+  background: #d9edf7;
+  border-color: #bce8f1
+}
 
 /**
 * CSS Utilities
@@ -113,6 +117,12 @@
 }
 .text-blue {
   color: #1A2155 !important;
+}
+.text-light-blue {
+  color: #31708f !important;
+}
+.text-bold{
+  font-weight: bold
 }
 
 /**

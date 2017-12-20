@@ -42,6 +42,7 @@ export interface ITradeOrder {
   "consideration"?:any,
   "totalFees"?: any,
   "orderTotalDescription"?: any,
-  "formattedTradeOrderTotal"?: any
+  "formattedTradeOrderTotal"?: any,
+  "cashAvailableForTrading"?: any
 }
 

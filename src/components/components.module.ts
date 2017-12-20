@@ -6,14 +6,14 @@ import { ColorFormatComponent } from './color-format/color-format';
 @NgModule({
 	declarations: [
     SwitchPortfolioComponent,
-    ColorFormatComponent
+    ColorFormatComponent,
   ],
 	imports: [
     IonicPageModule.forChild(SwitchPortfolioComponent)
   ],
 	exports: [
     SwitchPortfolioComponent,
-    ColorFormatComponent
+    ColorFormatComponent,
   ]
 })
 export class ComponentsModule {}

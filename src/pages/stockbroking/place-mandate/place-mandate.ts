@@ -82,11 +82,6 @@ export class PlaceMandatePage {
   previewMandate() {
     let tradeOrder = this.placeMandateForm.value
 
-    /**
-     * TODO Extra form things / validation
-     *   - Proper form validation and feedback
-     */
-
     // SET the other trade details not filled in the form
     tradeOrder.orderOrigin = 'WEB'
     tradeOrder.orderCurrency = 'NGN'
@@ -106,8 +101,12 @@ export class PlaceMandatePage {
         if(data.amount) {
           const orderTotal = parseFloat(data.amount)
 
+          // Set the previewed mandate in the local store
           const previewedTradeOrder = this.getPreviewedTradeOrder(orderTotal, tradeOrder)
           this.stbStore.setPreviewedTradeOrder(previewedTradeOrder)
+
+          // Move to the Execute mandate page
+          this.navCtrl.push('ExecuteMandatePage')
         } else {
           // An error object was returned in response to the getTradeOrderTotal request
           this.constants.presentToast(data.status, 'toastError')
@@ -216,7 +215,8 @@ export class PlaceMandatePage {
     tradeMandate.totalFees = totalFees
     tradeMandate.orderTotalDescription = orderTotalDescription
     tradeMandate.formattedTradeOrderTotal =formattedTradeOrderTotal
-
+    tradeMandate.cashAvailableForTrading = this.stbGetters.getCurrentPortfolioCashAvailableForTrading()
+    console.log(tradeMandate)
     return tradeMandate
 
   }
