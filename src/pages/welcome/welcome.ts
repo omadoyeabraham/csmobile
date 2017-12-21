@@ -43,10 +43,6 @@ export class WelcomePage {
 
   continueToDashboard(){
     this.navCtrl.setRoot('DashboardPage', {customerData: this.customerData});
-    //console.log('Continue to dashboard!');
-    // this.navCtrl.setRoot('DashboardPage').then(() =>{
-    //   this.navCtrl.popToRoot();
-    // });
   }
 
   backToLoginPage(){

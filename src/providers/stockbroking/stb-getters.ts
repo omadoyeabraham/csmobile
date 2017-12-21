@@ -50,6 +50,27 @@ export class StbGetters {
   }
 
   /**
+   * Calculate and return the total stb value for the user
+   *
+   * @memberof StbGetters
+   */
+  getTotalStbValue() :number {
+    const portfolios = this.stbStore.portfoliosSubject.getValue()
+    let stbTotalValue = 0
+
+    portfolios.forEach((portfolio) => {
+      // DO not sum up non-exchange or SMA portfolios
+      if (portfolio.portfolioClass != "EXCHANGE" || portfolio.label.indexOf('(SMA)') != -1) {
+        return
+      } else {
+        stbTotalValue += parseFloat(portfolio.currentValuation.amount)
+      }
+    })
+
+    return stbTotalValue
+  }
+
+  /**
    * Returns the total value of the current selected portfolio
    */
   getCurrentPortfolioTotalValue(): number {
@@ -426,6 +447,22 @@ export class StbGetters {
    */
   getCurrentPortfolioOutstandingTradeOrdersGroupedByDate() {
     return this.stbService.groupTradeOrdersByDate(this.getCurrentPortfolioOutstandingTradeOrders())
+  }
+
+  /**
+   * Get the label for a particular trade order term
+   *
+   * @param {string} orderTermName
+   * @memberof StbGetters
+   */
+  getOrderTermLabel(orderTermName: string) {
+    const orderTerms = this.stbStore.tradeOrderTermsSubject.getValue()
+
+    const neededOrderTerm = orderTerms.find((orderTerm) => {
+      return orderTerm.name === orderTermName
+    })
+
+    return neededOrderTerm.label
   }
 
 

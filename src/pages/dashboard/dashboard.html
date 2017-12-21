@@ -24,7 +24,7 @@
     <ion-item class="ml0" (click)="goToPage('StbPage')">
       <ion-icon name="folder-open" item-start class=""></ion-icon>
        <span class="ml0">Stockbroking</span>
-      <span item-end>&#8358;10,000,000</span>
+      <span item-end>&#8358;{{totalStbValue | number:'1.2-2'}}</span>
     </ion-item>
     <ion-item>
       <ion-icon name="pricetags" item-start class=""></ion-icon>

@@ -87,6 +87,7 @@ export class PlaceMandatePage {
     tradeOrder.orderCurrency = 'NGN'
     tradeOrder.portfolioLabel = this.stbStore.currentPortfolioSubject.getValue().label
     tradeOrder.portfolioName = this.stbStore.currentPortfolioSubject.getValue().name
+    tradeOrder.orderTermLabel = this.stbGetters.getOrderTermLabel(tradeOrder.orderTermName)
 
     // Show the loading spinner
     let loader = this.loadingController.create({
@@ -196,7 +197,7 @@ export class PlaceMandatePage {
     // Format the order total properly for preview
     let formattedTradeOrderTotal = ''
     if (orderTotal < 0) {
-      let absoluteOrderTotal = Math.abs(orderTotal)
+      let absoluteOrderTotal = Math.abs(orderTotal).toFixed(2)
       formattedTradeOrderTotal = absoluteOrderTotal.toLocaleString()
       formattedTradeOrderTotal = `(${absoluteOrderTotal})`
     } else {
@@ -216,7 +217,7 @@ export class PlaceMandatePage {
     tradeMandate.orderTotalDescription = orderTotalDescription
     tradeMandate.formattedTradeOrderTotal =formattedTradeOrderTotal
     tradeMandate.cashAvailableForTrading = this.stbGetters.getCurrentPortfolioCashAvailableForTrading()
-    console.log(tradeMandate)
+
     return tradeMandate
 
   }

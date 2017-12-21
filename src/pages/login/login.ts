@@ -78,6 +78,7 @@ export class LoginPage {
 
       // Having issues with the this.storage call because it returns a promise and we need this value to be immediately resolved
       this.storage.set('token', data.customer.portalPasswordToken)
+      this.storage.set('customer', data.customer)
       localStorage.setItem('auth_token', data.customer.portalPasswordToken)
 
       // Call the stbStore so it broadcasts the stb data, which will be picked up by the localStorage and other components

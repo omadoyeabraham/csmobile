@@ -133,6 +133,17 @@ export class StockbrokingProvider {
   }
 
   /**
+   * Execute a trade order on the floor of the NSE
+   *
+   * @param {ITradeOrder} tradeOrder
+   * @returns
+   * @memberof StockbrokingProvider
+   */
+  executeTradeOrder(tradeOrder: ITradeOrder) {
+    return this.http.post(this.constants.executeTradeOrderUrl, tradeOrder)
+  }
+
+  /**
    * Http call to get market data
    *
    * @memberof StockbrokingProvider

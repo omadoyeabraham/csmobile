@@ -20,7 +20,7 @@
     <ion-row class="cashDiv">
       <ion-col>
         <div>Cash Available for trading</div>
-        <div class="font-size-22"><b>&#8358;{{tradeOrder.cashAvailableForTrading}}</b></div>
+        <div class="font-size-22"><b>&#8358;{{tradeOrder.cashAvailableForTrading | number:'1.2-2'}}</b></div>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -58,15 +58,15 @@
     </ion-item>
     <ion-item>
       Limit Price
-      <span item-end>&#8358;{{tradeOrder.limitPrice}}</span>
+      <span item-end>&#8358;{{tradeOrder.limitPrice | number:'1.2-2'}}</span>
     </ion-item>
     <ion-item>
       Order Term
-      <span item-end>{{tradeOrder.orderTermName}}</span>
+      <span item-end>{{tradeOrder.orderTermLabel}}</span>
     </ion-item>
     <ion-item>
        {{tradeOrder.orderTotalDescription}} (includes commissions + fees)
-      <span item-end>{{tradeOrder.formattedtradeOrderTotal}}</span>
+      <span item-end>{{tradeOrder.formattedTradeOrderTotal}}</span>
     </ion-item>
     <ion-item></ion-item>
   </ion-item-group>
@@ -84,10 +84,12 @@
   <ion-grid>
     <ion-row class="">
       <ion-col>
-        <button ion-button class="w100p height-100">Place Order</button>
+        <button ion-button class="w100p height-100" (click)="alertBeforeTradeOrderExecution()">
+          Place Order
+        </button>
       </ion-col>
       <ion-col>
-        <button ion-button color="danger" class="w100p">Cancel</button>
+        <button ion-button color="danger" class="w100p" (click)="cancelOrder()">Cancel</button>
       </ion-col>
     </ion-row>
   </ion-grid>

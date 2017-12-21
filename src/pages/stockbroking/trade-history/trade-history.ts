@@ -36,7 +36,6 @@ export class TradeHistoryPage {
       data => {
         this.tradeOrders = this.stbGetters.getCurrentPortfolioTradeOrdersGroupedByDate()
         this.outstandingTradeOrders = this.stbGetters.getCurrentPortfolioOutstandingTradeOrdersGroupedByDate()
-        console.log(this.tradeOrders, this.outstandingTradeOrders)
       }
     )
   }

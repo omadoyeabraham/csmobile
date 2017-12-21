@@ -3,26 +3,16 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
-  Generated class for the FixedIncomeProvider provider.
+  Generated class for the FixedIncomeStoreProvider provider.
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
 @Injectable()
-export class FixedIncomeProvider {
-
-  private fiData: any;
+export class FixedIncomeStoreProvider {
 
   constructor(public http: Http) {
-
-  }
-
-  setFIData(fiData: any){
-    this.fiData = fiData;
-  }
-
-  getFIData(){
-    return this.fiData;
+    console.log('Hello FixedIncomeStoreProvider Provider');
   }
 
 }

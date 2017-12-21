@@ -34,6 +34,7 @@ export class StbStore {
   public allSecuritiesInCurrentPortfolioSubject = new BehaviorSubject<any>([])
   public marketDataSubject = new BehaviorSubject<any>([])
   public previewedTradeOrderSubject = new BehaviorSubject<any>({})
+  public totalStbValueSubject = new BehaviorSubject<any>({})
 
 
   /**
@@ -56,6 +57,7 @@ export class StbStore {
   public allSecuritiesInCurrentPortfolio = this.allSecuritiesInCurrentPortfolioSubject.asObservable()
   public marketData = this.marketDataSubject.asObservable()
   public previewedTradeOrder = this.previewedTradeOrderSubject.asObservable()
+  public totalStbValue = this.totalStbValueSubject.asObservable()
 
   // Used to determine if the user has any stockbroking portfolio
   public userHasStb: boolean = false
@@ -304,6 +306,34 @@ export class StbStore {
   setPreviewedTradeOrder(tradeOrder: ITradeOrder) {
     this.previewedTradeOrderSubject.next(tradeOrder)
     this.storage.set('stb-previewedTradeOrder', tradeOrder)
+  }
+
+  /**
+   * Clear the previewed trade order from storage, and emit {} on the data stream
+   *
+   * @memberof StbStore
+   */
+  clearPreviewedTradeOrder() :void {
+    this.previewedTradeOrderSubject.next({})
+    this.storage.set('stb-previewedTradeOrder', {})
+  }
+
+  /**
+   * Carryout some cleanup actions upon successful mandate placement
+   *
+   * @memberof StbStore
+   */
+  performActionsAfterMandatePlacement(): void {
+    this.storage.get('customer').then((customer) => {
+      const userID = customer.id
+
+      // Refresh the trade orders to reflect the new trade order
+      this.storeTradeOrders(userID, 0)
+    })
+
+    // Clear the storedTradeOrder
+    this.clearPreviewedTradeOrder()
+
   }
 
 

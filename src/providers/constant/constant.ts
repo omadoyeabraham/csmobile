@@ -28,6 +28,7 @@ export class ConstantProvider {
   public getSecurityNames = this.baseURL + 'getSecurityNames'
   public getTradeOrderTermsUrl = this.baseURL + 'findActiveTradeOrderTerms'
   public previewTradeOrderUrl = this.baseURL + 'getTradeOrderTotal'
+  public executeTradeOrderUrl = this.baseURL + 'createTradeOrder'
   public marketDataUrl = this.baseURL + 'getSecurity'
 
   public loginLoadingMessage = "Loading Please Wait..."
@@ -37,6 +38,7 @@ export class ConstantProvider {
   public toastDuration = 5000
   public toastPosition = "top"
   public previewTradeOrderLoadingMessage = 'Calculating order cost'
+  public executeTradeOrderLoadingMessage = 'Placing mandate'
 
   constructor(
     public http: Http,
@@ -54,7 +56,7 @@ export class ConstantProvider {
       message: message,
       duration: this.toastDuration,
       position: this.toastPosition,
-      showCloseButton: true,
+      showCloseButton: false,
       cssClass: toastKind
     });
     toaster.present();
