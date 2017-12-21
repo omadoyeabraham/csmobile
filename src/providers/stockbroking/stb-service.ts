@@ -152,4 +152,13 @@ export class StockbrokingProvider {
     return this.http.get(this.constants.marketDataUrl)
   }
 
+  /**
+   *
+   *
+   * @memberof StockbrokingProvider
+   */
+  getSecurityMarketSnapShot(selectedSecurity: string) {
+    return this.http.get(this.constants.getSecurityMarketSnapShot + '/' + selectedSecurity)
+  }
+
 }

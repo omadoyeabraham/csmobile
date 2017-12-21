@@ -6,6 +6,7 @@ import { IPortfolio } from '../../models/PortfolioInterface'
 import { Storage } from '@ionic/storage'
 import { StockbrokingProvider } from './stb-service';
 import { ITradeOrder } from '../../models/TradeOrderInterface';
+import * as moment from 'moment'
 
 /**
  * Observable data service used to provide stockbroking data app wide
@@ -31,6 +32,8 @@ export class StbStore {
 
   public securityNamesSubject = new BehaviorSubject<any>([])
   public securitySelectedOnTradePageSubject = new BehaviorSubject<any>({})
+  public selectedSecurityMarketSnapshotSubject = new BehaviorSubject<any>({})
+  public selectedSecurityMarketOverviewSubject = new BehaviorSubject<any>({})
   public allSecuritiesInCurrentPortfolioSubject = new BehaviorSubject<any>([])
   public marketDataSubject = new BehaviorSubject<any>([])
   public previewedTradeOrderSubject = new BehaviorSubject<any>({})
@@ -54,6 +57,8 @@ export class StbStore {
 
   public securityNames = this.securityNamesSubject.asObservable()
   public securitySelectedOnTradePage = this.securitySelectedOnTradePageSubject.asObservable()
+  public selectedSecurityMarketSnapshot = this.selectedSecurityMarketSnapshotSubject.asObservable()
+  public selectedSecurityMarketOverview = this.selectedSecurityMarketOverviewSubject.asObservable()
   public allSecuritiesInCurrentPortfolio = this.allSecuritiesInCurrentPortfolioSubject.asObservable()
   public marketData = this.marketDataSubject.asObservable()
   public previewedTradeOrder = this.previewedTradeOrderSubject.asObservable()
@@ -277,6 +282,9 @@ export class StbStore {
     if(securityData !== undefined) {
       this.securitySelectedOnTradePageSubject.next(securityData)
       this.storage.set('stb-securitySelectedOnTradePage', securityData)
+
+      // Get and store the current market data for the selected security
+      this.getMarketSnapShotForSelectedSecurity(securityName)
     } else {
       this.securitySelectedOnTradePageSubject.next({})
       this.storage.set('stb-securitySelectedOnTradePage', {})
@@ -336,6 +344,92 @@ export class StbStore {
 
   }
 
+  /**
+   * Call the STB service and get the current market data for the selected security
+   *
+   * @param {string} selectedSecurity
+   * @memberof StbStore
+   */
+  getMarketSnapShotForSelectedSecurity(selectedSecurity: string) {
+    this.stbService.getSecurityMarketSnapShot(selectedSecurity).subscribe(
+      data => {
+        this.setMarketSnapShotForSelectedSecurity(data)
+      }
+    )
+  }
+
+  /**
+   * Parse, transform, store and emit the marketShapShot data gotten from the
+   * 'getMarketSnapShotForSelectedSecurity' call
+   *
+   * @param {any} snapShotData
+   * @memberof StbStore
+   */
+  setMarketSnapShotForSelectedSecurity(snapShotData) {
+    let marketSnapShot = snapShotData
+
+    // Calculating bids
+    let bidLevels = (marketSnapShot && marketSnapShot.bidLevels) ? (marketSnapShot.bidLevels) : []
+    let bids = []
+    let bidsTotal = 0
+    let companyName = marketSnapShot ? (marketSnapShot.companyName) : ''
+    let valueTraded = marketSnapShot ? marketSnapShot.valueTraded : ''
+
+    bidLevels.forEach((bidLevel, index) => {
+      bidLevel.id = ++index
+      bidLevel.total = bidsTotal + parseFloat(bidLevel.qty)
+      bidsTotal = bidLevel.total
+      bids.push(bidLevel)
+    })
+
+    // Calculating offers
+    let offerLevels = (marketSnapShot && marketSnapShot.offerLevels) ? marketSnapShot.offerLevels : []
+    let offers = []
+    let offersTotal = 0
+
+    offerLevels.forEach((offerLevel, index) => {
+      offerLevel.id = ++index
+      offerLevel.total = offersTotal + parseFloat(offerLevel.qty)
+      offersTotal = offerLevel.total
+      offers.push(offerLevel)
+    })
+
+    // Getting trades and price movements
+    let trades = (marketSnapShot && marketSnapShot.trades) ? marketSnapShot.trades : []
+    let priceMovements = []
+
+    trades.forEach((trade, index) => {
+      trade.id = ++index
+      let date = moment(trade.time).format('HH:mm:ss')
+
+      let priceMovement = {
+        id: ++index,
+        date: date,
+        price: trade.tradePrice
+      }
+
+      priceMovements.push(priceMovement)
+    })
+
+    // So the graph is plotted in the correct order
+    priceMovements.reverse()
+
+    let currentMarketData = {
+      bids,
+      offers,
+      trades,
+      priceMovements,
+      companyName,
+      valueTraded
+    }
+
+    this.selectedSecurityMarketSnapshotSubject.next(currentMarketData)
+    this.storage.set('stb-selectedSecurityMarketData', currentMarketData)
+
+    this.selectedSecurityMarketOverviewSubject.next(snapShotData)
+    this.storage.set('stb-selectedSecurityMarketOverview', snapShotData)
+
+  }
 
 
 }

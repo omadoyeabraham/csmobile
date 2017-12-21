@@ -7,12 +7,83 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>instrument-details</ion-title>
+    <ion-title><b>{{selectedInstrument.name}}</b></ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content no-padding>
+
+    <!-- Instrument Name-->
+    <ion-grid>
+      <ion-row class="nameDiv">
+        <ion-col>
+          <div class="font-size-20">
+            <b class="text-blue">{{selectedInstrument.label}}</b>
+          </div>
+          <div>{{selectedInstrument.name}}</div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- Graph -->
+    <ion-item-divider color="light" class="font-size-18 bg-light-blue"><b>Price Movement Chart</b></ion-item-divider>
+    <div
+      id="priceMovementGraph"
+      style="height: 200px">
+    </div>
+
+    <!-- Stock highlights -->
+    <ion-item-divider color="light" class="font-size-18 bg-light-blue mt20">
+      <b>Stock Highlights</b>
+    </ion-item-divider>
+    <ion-grid>
+      <ion-row>
+        <!-- 1st DIV -->
+        <ion-col>
+          <ion-grid>
+            <ion-row>
+              <ion-col>Current Price</ion-col>
+              <ion-col text-right>&#8358;97.12</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>Open Price</ion-col>
+              <ion-col text-right>&#8358;97.12</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>Low Price</ion-col>
+              <ion-col text-right>&#8358;97.12</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>High Price</ion-col>
+              <ion-col text-right>&#8358;97.12</ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+
+            <!-- 2ND DIV -->
+            <ion-col>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>Price Change</ion-col>
+                  <ion-col text-right>&#8358;97.12</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>Price Change (%)</ion-col>
+                  <ion-col text-right>&#8358;97.12</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>Vol. Traded</ion-col>
+                  <ion-col text-right>&#8358;97.12</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>Val. Traded</ion-col>
+                  <ion-col text-right>&#8358;97.12</ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+      </ion-row>
+    </ion-grid>
 
 </ion-content>

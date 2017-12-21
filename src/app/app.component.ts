@@ -21,13 +21,14 @@ export class MyApp {
   constructor(platform: Platform,
               statusBar: StatusBar,
               splashScreen: SplashScreen,
-              private storage: Storage) {
+              ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
     });
+
   }
 
   openPage(page) {
@@ -43,11 +44,11 @@ export class MyApp {
   /**
    * Logout the user
    */
-  logout() {
-    this.storage.clear().then(() => {
-      this.nav.setRoot(HomePage)
-    })
-  }
+  // logout() {
+  //   this.storage.clear().then(() => {
+  //     this.nav.setRoot(HomePage)
+  //   })
+  // }
 
 }
 

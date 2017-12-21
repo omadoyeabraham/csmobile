@@ -32,7 +32,8 @@ export class TradePage {
   goToMandatePage(securityName: string = '') {
     this.stbStore.setSecuritySelectedOnTradePage(securityName)
 
-    this.navCtrl.push('PlaceMandatePage')
+    this.navCtrl.push('InstrumentDetailsPage')
+    // this.navCtrl.push('PlaceMandatePage')
   }
 
 }

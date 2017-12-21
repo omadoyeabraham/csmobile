@@ -30,6 +30,8 @@ export class ConstantProvider {
   public previewTradeOrderUrl = this.baseURL + 'getTradeOrderTotal'
   public executeTradeOrderUrl = this.baseURL + 'createTradeOrder'
   public marketDataUrl = this.baseURL + 'getSecurity'
+  public getSecurityMarketSnapShot = this.baseURL + 'findSecurityOverviewByName'
+  // public getSecurityMarketOverview = this.baseURL + 'findSecurityOverviewById'
 
   public loginLoadingMessage = "Loading Please Wait..."
   public toastMessagePasswordMismatch = "Username and Password do not match!"
