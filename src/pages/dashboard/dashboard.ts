@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams  } from 'ionic-angular';
 import { StbGetters } from '../../providers/stockbroking/stb-getters';
+import { FixedIncomeGettersProvider } from '../../providers/fixed-income/fixed-income-getters';
 
 /**
  * Generated class for the DashboardPage page.
@@ -16,15 +17,21 @@ import { StbGetters } from '../../providers/stockbroking/stb-getters';
 })
 export class DashboardPage {
 
-  private customerData: any;
+  private customerData: any
   private totalStbValue: number
+  private totalNairaFiValue: number
+  private totalDollarFiValue: number
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private stbGetter: StbGetters) {
+              private stbGetter: StbGetters,
+              private fixedIncomeGetters: FixedIncomeGettersProvider) {
 
-    this.customerData = navParams.get('customerData');
+    this.customerData = navParams.get('customerData')
+
     this.totalStbValue = this.stbGetter.getTotalStbValue()
+    this.totalNairaFiValue = this.fixedIncomeGetters.getTotalNairaFivalue()
+    this.totalDollarFiValue = this.fixedIncomeGetters.getTotalDollarFiValue()
   }
 
   ionViewDidLoad() {

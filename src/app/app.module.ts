@@ -22,8 +22,10 @@ import { UtilityServiceProvider } from '../providers/utility-service/utility-ser
 import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 import { AuthProvider } from '../providers/auth/auth';
 import { AuthInterceptor } from '../interceptors/AuthInterceptor';
-import { FixedIncomeStoreProvider } from '../providers/fixed-income-store/fixed-income-store';
-import { FixedIncomeGettersProvider } from '../providers/fixed-income-getters/fixed-income-getters';
+import { FixedIncomeStoreProvider } from '../providers/fixed-income/fixed-income-store';
+import { FixedIncomeGettersProvider } from '../providers/fixed-income/fixed-income-getters';
+import { CashGettersProvider } from '../providers/cash-getters/cash-getters';
+import { CashStoreProvider } from '../providers/cash-store/cash-store';
 
 
 @NgModule({
@@ -60,6 +62,8 @@ import { FixedIncomeGettersProvider } from '../providers/fixed-income-getters/fi
     StbGetters,
     UtilityServiceProvider,
     LocalStorageProvider,
+    FixedIncomeStoreProvider,
+    FixedIncomeGettersProvider,
     AuthProvider,
     {
       provide: HTTP_INTERCEPTORS,
@@ -67,7 +71,9 @@ import { FixedIncomeGettersProvider } from '../providers/fixed-income-getters/fi
       multi: true
     },
     FixedIncomeStoreProvider,
-    FixedIncomeGettersProvider
+    FixedIncomeGettersProvider,
+    CashGettersProvider,
+    CashStoreProvider
   ]
 })
 export class AppModule {}

@@ -7,6 +7,7 @@ import { StockbrokingProvider } from '../../providers/stockbroking/stb-service';
 import { AuthProvider } from '../../providers/auth/auth';
 import { Storage } from '@ionic/storage/es2015/storage';
 import { StbGetters } from '../../providers/stockbroking/stb-getters';
+import { FixedIncomeStoreProvider } from '../../providers/fixed-income/fixed-income-store';
 
 /**
  * Generated class for the LoginPage page.
@@ -31,6 +32,7 @@ export class LoginPage {
     private stbStore: StbStore,
     private stbService: StockbrokingProvider,
     private stbGetters: StbGetters,
+    private fixedIncomeStore: FixedIncomeStoreProvider,
     private authProvider: AuthProvider,
     private storage: Storage
   ) {
@@ -83,6 +85,9 @@ export class LoginPage {
 
       // Call the stbStore so it broadcasts the stb data, which will be picked up by the localStorage and other components
       this.stbStore.storeStbData(data)
+
+      // Call the fixedIncomeStore so it broadcasts the stb data, which will be picked up by the localStorage and other components
+      this.fixedIncomeStore.storeFixedIncomeData(data)
 
       /**
        * Make asynchronous calls to get various data items that will be required later

@@ -3,16 +3,16 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
-  Generated class for the FixedIncomeGettersProvider provider.
+  Generated class for the CashGettersProvider provider.
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
 @Injectable()
-export class FixedIncomeGettersProvider {
+export class CashGettersProvider {
 
   constructor(public http: Http) {
-    console.log('Hello FixedIncomeGettersProvider Provider');
+    console.log('Hello CashGettersProvider Provider');
   }
 
 }
