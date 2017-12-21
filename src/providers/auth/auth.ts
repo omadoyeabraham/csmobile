@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { ConstantProvider } from '../constant/constant';
 import { Observable } from 'rxjs/Observable';
 import { Storage } from '@ionic/storage/es2015/storage';
-
 /**
  * Authentication service which provides different authentication related facilities to the csmobile application.
  *
@@ -35,12 +34,6 @@ export class AuthProvider {
 
   }
 
-  /**
-   * Logout the user
-   */
-  logout() {
-
-  }
 
   /**
    * Get the authorization token which will be set as the `Authorization` header's value.

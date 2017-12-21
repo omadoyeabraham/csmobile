@@ -8,6 +8,15 @@
               {{ p.title }}
             </button>
         </ion-list>
+
+        <!-- Logout -->
+        <ion-list no-lines>
+          <button ion-item menuClose class="bg-black" (click)="logout()">
+            <ion-icon item-start [name]="cancel"></ion-icon>
+            Logout
+          </button>
+        </ion-list>
+
     </ion-content>
 </ion-menu>
 

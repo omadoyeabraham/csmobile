@@ -11,7 +11,6 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ConstantProvider } from '../providers/constant/constant';
 import { CustomerProvider } from '../providers/customer/customer';
-import { CashAccountProvider } from '../providers/cash-account/cash-account';
 import { FixedIncomeProvider } from '../providers/fixed-income/fixed-income';
 import { StockbrokingProvider } from '../providers/stockbroking/stb-service';
 import { ChartsProvider } from '../providers/charts/charts';
@@ -19,13 +18,12 @@ import { StbPortfolioProvider } from '../providers/stockbroking/stb-portfolio';
 import { StbStore } from '../providers/stockbroking/stb-store';
 import { StbGetters } from '../providers/stockbroking/stb-getters';
 import { UtilityServiceProvider } from '../providers/utility-service/utility-service';
-import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 import { AuthProvider } from '../providers/auth/auth';
 import { AuthInterceptor } from '../interceptors/AuthInterceptor';
 import { FixedIncomeStoreProvider } from '../providers/fixed-income/fixed-income-store';
 import { FixedIncomeGettersProvider } from '../providers/fixed-income/fixed-income-getters';
-import { CashGettersProvider } from '../providers/cash-getters/cash-getters';
-import { CashStoreProvider } from '../providers/cash-store/cash-store';
+import { CashGettersProvider } from '../providers/cash/cash-getters';
+import { CashStoreProvider } from '../providers/cash/cash-store';
 
 
 @NgModule({
@@ -53,7 +51,6 @@ import { CashStoreProvider } from '../providers/cash-store/cash-store';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ConstantProvider,
     CustomerProvider,
-    CashAccountProvider,
     FixedIncomeProvider,
     StockbrokingProvider,
     ChartsProvider,
@@ -61,9 +58,10 @@ import { CashStoreProvider } from '../providers/cash-store/cash-store';
     StbStore,
     StbGetters,
     UtilityServiceProvider,
-    LocalStorageProvider,
     FixedIncomeStoreProvider,
     FixedIncomeGettersProvider,
+    CashGettersProvider,
+    CashStoreProvider,
     AuthProvider,
     {
       provide: HTTP_INTERCEPTORS,
